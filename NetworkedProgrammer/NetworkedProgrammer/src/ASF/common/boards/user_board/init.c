@@ -1,12 +1,4 @@
-/**
- * \file
- *
- * \brief User board initialization template
- *
- */
-/*
- * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
- */
+// Pin definitions and board setup
 
 #include <asf.h>
 #include <board.h>

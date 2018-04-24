@@ -386,6 +386,9 @@ uint32_t checkGoFile(void){
 	for(int ii = 0; ii < sizeof(fileSize); ii++){
 		readFileCommand[ii + 5 + sizeof(fileStream)] = fileSize[ii];
 	}
+	readFileCommand[sizeof(readFileCommand)-1]="\r";
+	readFileCommand[sizeof(readFileCommand)-0]="\n";
+
 	write_wifi_command(readFileCommand,3);
 	
 	if(rawRecievedMessage[0] == "y"){
@@ -394,4 +397,9 @@ uint32_t checkGoFile(void){
 	if(rawRecievedMessage[0] == "n"){
 		return 0;
 	}
+	
+
+
+
+
 }

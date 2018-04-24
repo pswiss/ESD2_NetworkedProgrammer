@@ -31,7 +31,7 @@ int main (void)
 	// Main Loop //////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
 
-		// If user has pushed the button to enter web setup, enter this routine
+		/*// If user has pushed the button to enter web setup, enter this routine
 		if(wifi_setup_flag == true){
 
 			// Send the setup web string to the wifi chip
@@ -47,6 +47,7 @@ int main (void)
 		else{
 
 			checkGoFile();
-		}
+		}*/
+		checkGoFile();
 	}
 }
