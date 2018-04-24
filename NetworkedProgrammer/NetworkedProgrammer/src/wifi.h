@@ -132,6 +132,7 @@ void configure_wifi_comm_pin(void);
 void configure_wifi_web_setup_pin(void);
 void write_wifi_command(char* , uint8_t);
 void write_image_to_file(void);
+uint32_t checkGoFile(void);
 
 // A few functions I wrote to make main() a bit cleaner
 void resetWifi(void);

@@ -36,7 +36,7 @@ int main (void)
 
 			// Send the setup web string to the wifi chip
 			
-			d("setup web\r\n",3);
+			write_wifi_command("setup web\r\n",3);
 
 			// Clear the flag
 			wifi_setup_flag = false;
