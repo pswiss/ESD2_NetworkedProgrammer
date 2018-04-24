@@ -1,5 +1,5 @@
 /*///////////////////////////////////////////////////////////////////
-Authors: Petras Swissler, Sasha Portnova, Wenja Zhou
+Author: Petras Swissler
 ---------------------------------------------------------------------
 wifi.c contains
 WiFi variable initializations.
@@ -28,8 +28,8 @@ volatile bool wifi_setup_flag = false;
 
 volatile uint32_t receivedMessage = NO_MESSAGE;
 
-volatile int captured_image_start;
-volatile int captured_image_end;
+volatile uint8_t rawRecievedMessage[maxWifiMessage];
+
 
 /////////////////////////////////////////////////////////////////////
 /*
@@ -90,6 +90,7 @@ receive the image.
 */
 void process_data_wifi (void) 
 {
+	strcpy(rawRecievedMessage,buffer_wifi);
 	// Compare the received string with some other string
 	/*if(strstr(buffer_wifi, "StringToCompare")){
 		// set receivedMessage variable as appropriate
@@ -178,8 +179,6 @@ void configure_usart_wifi(void)
 	ioport_set_pin_level(PIN_USART0_CTS_IDX,false);
 	/* Configure USART RTS pin */
 	gpio_configure_pin(PIN_USART0_RTS_IDX, PIN_USART0_RTS_FLAGS);
-	
-	// might just pull wifi_cts low
 }
 
 /*
@@ -194,8 +193,7 @@ void configure_wifi_comm_pin(void)
 	/* Adjust PIO debounce filter using a 10 Hz filter. */
 	pio_set_debounce_filter(WIFI_COM_COMPLETE_PIO, WIFI_COM_COMPLETE_MSK, 10);
 
-	/* Initialize PIO interrupt handler, see PIO definition in conf_board.h
-	**/
+	/* Initialize PIO interrupt handler, see PIO definition in conf_board.h	**/
 	pio_handler_set(WIFI_COM_COMPLETE_PIO, WIFI_COM_COMPLETE_ID, WIFI_COM_COMPLETE_MSK,
 			WIFI_COM_COMPLETE_ATTR, wifi_command_response_handler);
 
@@ -217,8 +215,7 @@ void configure_wifi_web_setup_pin(void)
 	/* Adjust PIO debounce filter using a 10 Hz filter. */
 	pio_set_debounce_filter(PUSH_BUTTON_PIO, PUSH_BUTTON_PIN_MSK, 10);
 
-	/* Initialize PIO interrupt handler, see PIO definition in conf_board.h
-	**/
+	/* Initialize PIO interrupt handler, see PIO definition in conf_board.h**/
 	pio_handler_set(PUSH_BUTTON_PIO, PUSH_BUTTON_ID, PUSH_BUTTON_PIN_MSK,
 			PUSH_BUTTON_ATTR, wifi_web_setup_handler);
 
@@ -247,14 +244,6 @@ void write_wifi_command(char* comm, uint8_t cnt)
 		int dv = 0;
 		dv++;
 	}
-	/*
-	// Check if a message was received
-	if(receivedMessage!=NO_MESSAGE){
-		// Action for if have received a message
-	}
-	else{
-		// Action for if have not received a message
-	}*/
 }
 
 /*
@@ -348,5 +337,61 @@ void waitForWifiNetworkConnect(void){
 			wifi_setup_flag = false;
 			waitForWifiNetworkConnect();
 		}
+	}
+}
+
+// Check whether the go file exists, and its contents
+uint32_t checkGoFile(void){
+	// Send command to the wifi chip telling it to open the file
+	write_wifi_command("fop test.txt\r\n",3);
+
+	// save the output
+	uint8_t fileStream[maxWifiMessage];
+	for(int ii = 0; ii< maxWifiMessage; ii++){
+		fileStream[ii] = " ";
+	}
+	strcpy(fileStream,rawRecievedMessage);
+
+	// get the size of the file
+	write_wifi_command("fst test.txt\r\n",3);
+	// save the output, remove unneeded portions of the file
+	uint8_t fileSize[maxWifiMessage];
+	strcpy(fileSize,rawRecievedMessage);
+	uint8_t commaFlag = 0;
+
+	for(int ii = 0; ii< maxWifiMessage; ii++){
+		if(commaFlag){
+			fileSize[ii] = " ";
+		}
+		else{
+			if(fileSize[ii] = ","){
+				commaFlag = 1;
+			}
+			else{
+				// Do nothing
+			}
+		}
+	}
+
+	// Read the file
+	// Create the command string
+	uint8_t readFileCommand[500];
+	for(int ii = 0; ii < sizeof(readFileCommand); ii++){
+		readFileCommand[ii] = " ";
+	}
+	strcpy(readFileCommand,"read ");
+	for(int ii = 0; ii< sizeof(fileStream);ii++){
+		readFileCommand[ii + 5] = fileStream[ii];
+	}
+	for(int ii = 0; ii < sizeof(fileSize); ii++){
+		readFileCommand[ii + 5 + sizeof(fileStream)] = fileSize[ii];
+	}
+	write_wifi_command(readFileCommand,3);
+	
+	if(rawRecievedMessage[0] == "y"){
+		return 1;
+	}
+	if(rawRecievedMessage[0] == "n"){
+		return 0;
 	}
 }

@@ -16,6 +16,7 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 
 // Include necessary libraries
 #include <string.h>
+#include <stdio.h>
 
 // Pin Definitions: USART
 /** USART0 pin RX */
@@ -83,6 +84,9 @@ volatile bool wifi_setup_flag;
 
 volatile uint32_t uintreceivedMessage;
 
+#define maxWifiMessage				50
+volatile uint8_t rawRecievedMessage[maxWifiMessage];
+
 
 // Messages
 #define NO_MESSAGE					0
@@ -110,6 +114,9 @@ volatile uint32_t uintreceivedMessage;
 #define msg_UNKNOWN_COMMAND			"Unknown command"
 
 #define DEFAULT						4000
+
+
+
 
 
 

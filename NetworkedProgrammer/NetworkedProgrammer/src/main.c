@@ -35,7 +35,8 @@ int main (void)
 		if(wifi_setup_flag == true){
 
 			// Send the setup web string to the wifi chip
-			write_wifi_command("setup web\r\n",3);
+			
+			d("setup web\r\n",3);
 
 			// Clear the flag
 			wifi_setup_flag = false;
@@ -45,30 +46,7 @@ int main (void)
 		// If user has not requested web setup, try to capture and display an image
 		else{
 
-			//Check if connected to a network by polling the network status pin
-			if(ioport_get_pin_level(PIN_WIFI_NETWORK_STATUS) == true){
-
-				//if connected, are there any open streams?
-				//Write the command to the wifi chip
-				write_wifi_command("stream_poll all\r\n",3);
-
-				// Unless the wifi chip responds with command failed (no open connections), capture an image
-				if(receivedMessage!=RECIEVE_NONE){
-					
-					write_image_to_file();
-				}
-
-				// Otherwise wait a second
-				else{
-					delay_ms(1000);
-				}
-			}
-
-			// If all else fails, just reset the wifi chip and wait for it to reconnect to the network
-			else{
-				resetWifi();
-				waitForWifiNetworkConnect();
-			}
+			checkGoFile();
 		}
 	}
 }
