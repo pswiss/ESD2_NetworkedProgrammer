@@ -27,6 +27,8 @@ int main (void)
 	
 	// Reset the wifi
 	resetWifi();
+	delay_ms(8000);
+	//writeWifiConfigurationCommands();
 	
 	// Main Loop //////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
@@ -49,5 +51,6 @@ int main (void)
 			checkGoFile();
 		}*/
 		checkGoFile();
+		delay_ms(5000);
 	}
 }

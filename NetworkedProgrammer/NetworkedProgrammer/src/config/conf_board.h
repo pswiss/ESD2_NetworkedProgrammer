@@ -35,8 +35,11 @@
 //! [tc_define_irq_handler]
 
 #define PIN_WIFI_RESET				PIO_PB1_IDX	//WIFI_RESET PIN
-#define PIN_WIFI_NETWORK_STATUS		PIO_PA11_IDX //Network Status Pin
+#define PIN_WIFI_NETWORK_STATUS		PIO_PA11_IDX //Network Status Pin - wifi 14
 #define PUSH_BUTTON					PIO_PA0_IDX //Web Setup Pin
-#define WIFI_COM_COMPLETE			PIO_PA12_IDX //Wifi Command Complete Pin
+#define WIFI_COM_COMPLETE			PIO_PA12_IDX //Wifi Command Complete Pin - wifi 16
+
+//write_wifi_command("set system.cmd.gpio 16\r\n",2);
+//write_wifi_command("set wlan.network.status_gpio 14\r\n",2);
 
 #endif /* CONF_BOARD_H_INCLUDED */

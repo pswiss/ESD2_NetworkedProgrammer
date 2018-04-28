@@ -246,66 +246,14 @@ void write_wifi_command(char* comm, uint8_t cnt)
 	}
 }
 
-/*
-Writes an image from the SAM4S8B to the AMW136. If the
-length of the image is zero (i.e. the image is not valid), return. Otherwise, follow this protocol
-(illustrated in Appendix B):
-1. Issue the command “image transfer xxxx? where xxxx is replaced by the length of the
-image you want to transfer.
-2. After the AMW136 acknowledges that it received your command, start streaming the image.
-3. After the image is done sending, the AMW136 should say “Complete? However, the “command complete?pin will not have a rising edge, so it will be hard to sense. You can still try
-to sense it before moving on, or simply insert a slight delay
-*/
-void write_image_to_file(void) 
-{
-	
-	// Make sure that the image is valid.
-	int imgLength = 0;
-
-	// Explicitly create the image to write
-	uint8_t imageToWrite[imgLength];
-	for(int k = captured_image_start; k < captured_image_end;k++){
-		imageToWrite[k-captured_image_start] = 0;//g_p_uc_cap_dest_buf[k];
-	}
-	if((imgLength != 0)&&(imgLength<WIFI_RX_BUFF_SIZE)){
-		char sendString[80];
-		for(int ii = 0; ii<80; ii++){
-			sendString[ii] = 0;
-    	}
-		sprintf(sendString, "image_transfer %d\r\n",imgLength);
-		write_wifi_command(&sendString, 3);
-
-		// only send the image if the wifi chip is ready for it
-		if(receivedMessage==START_TRANSFER){
-			// write the command via USART
-			//write_wifi_command(imageToWrite,1);
-			delay_ms(50);
-			for(int k = 0; k < imgLength; k++){
-				usart_putchar(BOARD_USART, imageToWrite[k]);
-			}			
-			
-			delay_ms(10);
-    	}
-		else{
-			if(receivedMessage==CLIENT_NOT_CONNECTED){
-				delay_ms(500);
-      		}	
-			else{
-			}  					
-    	}
-	}
-	else{
-	}
-}
-
 
 // Simple function to reset the wifi
 void resetWifi(void){
 	// Reset the wifi by pulling the wifi reset pin low, then bringing it back high.
 	ioport_set_pin_level(PIN_WIFI_RESET,LOW); //reset WIFI
-	delay_ms(50);
+	delay_ms(1000);
 	ioport_set_pin_level(PIN_WIFI_RESET,HIGH); //turn Wifi Back on
-	delay_ms(1000); // Account for ~0.7s high during reset
+	delay_ms(2000); // Account for ~0.7s high during reset
 }
 
 void writeWifiConfigurationCommands(void){
@@ -318,7 +266,7 @@ void writeWifiConfigurationCommands(void){
 	write_wifi_command("set system.indicator.gpio wlan 20\r\n",2);
 	write_wifi_command("set system.indicator.gpio network 18\r\n",2);
 	write_wifi_command("set system.indicator.gpio softap 21\r\n",2);
-	write_wifi_command("set system.cmd.gpio 13\r\n",2);
+	write_wifi_command("set system.cmd.gpio 16\r\n",2);
 	write_wifi_command("set wlan.network.status_gpio 14\r\n",2);
 	write_wifi_command("save\r\n",2);
 	delay_ms(100);
@@ -342,60 +290,103 @@ void waitForWifiNetworkConnect(void){
 
 // Check whether the go file exists, and its contents
 uint32_t checkGoFile(void){
+
+	write_wifi_command("bump\r\n",3);
+	// reset the wifi buffer
+	input_pos_wifi = 0;
+	for(uint32_t ii = 0 ;ii < MAX_INPUT_WIFI; ii++){
+		buffer_wifi[ii] = 0;
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	uint8_t fileStream[maxWifiMessage];
+	for(int ii = 0; ii< maxWifiMessage; ii++){
+		fileStream[ii] = 0x20;
+	}
 	// Send command to the wifi chip telling it to open the file
 	write_wifi_command("fop test.txt\r\n",3);
 
 	// save the output
-	uint8_t fileStream[maxWifiMessage];
-	for(int ii = 0; ii< maxWifiMessage; ii++){
-		fileStream[ii] = " ";
+	int ii = 9;
+	while((rawRecievedMessage[ii]!=93)&&(ii<100)){
+		fileStream[ii-9] = rawRecievedMessage[ii];
+		ii++;
 	}
-	strcpy(fileStream,rawRecievedMessage);
+	/////////////////////////////////////////////////////////////////////////////
 
-	// get the size of the file
-	write_wifi_command("fst test.txt\r\n",3);
+	// reset the wifi buffer
+	input_pos_wifi = 0;
+	for(uint32_t ii = 0 ;ii < MAX_INPUT_WIFI; ii++){
+		buffer_wifi[ii] = 0;
+	}
 	// save the output, remove unneeded portions of the file
 	uint8_t fileSize[maxWifiMessage];
-	strcpy(fileSize,rawRecievedMessage);
-	uint8_t commaFlag = 0;
-
 	for(int ii = 0; ii< maxWifiMessage; ii++){
-		if(commaFlag){
-			fileSize[ii] = " ";
-		}
-		else{
-			if(fileSize[ii] = ","){
-				commaFlag = 1;
-			}
-			else{
-				// Do nothing
-			}
-		}
+		fileSize[ii] = 0x20;
+	}
+	// get the size of the file
+	write_wifi_command("fst test.txt\r\n",3);
+	
+	// save the output
+	ii = 0;
+	while(rawRecievedMessage[ii]!=44){
+		fileSize[ii] = rawRecievedMessage[ii];
+		ii++;
 	}
 
+	/////////////////////////////////////////////////////////////////////
 	// Read the file
 	// Create the command string
-	uint8_t readFileCommand[500];
-	for(int ii = 0; ii < sizeof(readFileCommand); ii++){
-		readFileCommand[ii] = " ";
-	}
+	uint8_t readFileCommand[100];
 	strcpy(readFileCommand,"read ");
-	for(int ii = 0; ii< sizeof(fileStream);ii++){
-		readFileCommand[ii + 5] = fileStream[ii];
+	for(int ii = 4; ii < sizeof(readFileCommand); ii++){
+		readFileCommand[ii] = 32;
 	}
-	for(int ii = 0; ii < sizeof(fileSize); ii++){
-		readFileCommand[ii + 5 + sizeof(fileStream)] = fileSize[ii];
-	}
-	readFileCommand[sizeof(readFileCommand)-1]="\r";
-	readFileCommand[sizeof(readFileCommand)-0]="\n";
 
-	write_wifi_command(readFileCommand,3);
-	
-	if(rawRecievedMessage[0] == "y"){
-		return 1;
+	// Check for space, add file stream to string
+	ii = 0;
+	while(fileStream[ii] != 32){
+		readFileCommand[ii+5] = fileStream[ii];
+		ii++;
 	}
-	if(rawRecievedMessage[0] == "n"){
+
+	readFileCommand[5+ii] = 32;
+	int sizetrack = 5+ii+1;
+
+	
+	ii = 0;
+	// Check for space, add file size to string
+	while((fileSize[ii]!=32)||(ii==0)){
+		readFileCommand[ii+sizetrack] = fileSize[ii];
+		ii++;
+	}
+
+	sizetrack = sizetrack+ii;
+
+	readFileCommand[sizetrack+1]=13;
+	readFileCommand[sizetrack+2]=10;
+
+	sizetrack = sizetrack+3;
+	uint8_t realReadFileCommand[sizetrack];
+	for(int jj = 0; jj < sizetrack; jj++){
+		realReadFileCommand[jj] = readFileCommand[jj];
+	}
+
+	// reset the wifi buffer
+	input_pos_wifi = 0;
+	for(uint32_t ii = 0 ;ii < MAX_INPUT_WIFI; ii++){
+		buffer_wifi[ii] = 0;
+	}
+	// Get the file
+	write_wifi_command(realReadFileCommand,3);
+	
+	if(strstr(rawRecievedMessage,"Petras")){
+		return 1;
+		
+	}
+	else{
 		return 0;
+		
 	}
 	
 
