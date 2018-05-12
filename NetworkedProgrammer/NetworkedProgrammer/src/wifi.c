@@ -21,14 +21,14 @@ volatile uint32_t received_byte_wifi = 0;
 volatile bool new_rx_wifi = false;
 volatile uint8_t buffer_wifi[MAX_INPUT_WIFI];
 volatile uint32_t input_pos_wifi = 0;
-
 volatile uint8_t counts = 0;
-
 volatile bool wifi_setup_flag = false;
-
 volatile uint32_t receivedMessage = NO_MESSAGE;
-
 volatile uint8_t rawRecievedMessage[maxWifiMessage];
+
+// Variables for Hex Files
+volatile uint32_t linesInHexFile;
+volatile uint8_t hexfile[100000];
 
 
 /////////////////////////////////////////////////////////////////////
@@ -51,8 +51,6 @@ void WIFI_USART_HANDLER(void)
 	}
 }
 
-
-
 /*
 Stores every incoming byte (in byte) from the AMW136 in a buffer.
 */
@@ -61,7 +59,6 @@ void process_incoming_byte_wifi(uint8_t in_byte)
 	buffer_wifi[input_pos_wifi] = in_byte;
 	input_pos_wifi++;
 }
-
 
 /*
 Handler for command complete rising-edge interrupt from AMW136.
@@ -246,7 +243,6 @@ void write_wifi_command(char* comm, uint8_t cnt)
 	}
 }
 
-
 // Simple function to reset the wifi
 void resetWifi(void){
 	// Reset the wifi by pulling the wifi reset pin low, then bringing it back high.
@@ -272,7 +268,6 @@ void writeWifiConfigurationCommands(void){
 	delay_ms(100);
 }
 
-
 // Don't do anything until the wifi chip has connected to the network
 void waitForWifiNetworkConnect(void){
 	ioport_set_pin_dir(PIN_WIFI_NETWORK_STATUS,IOPORT_DIR_INPUT);
@@ -289,7 +284,7 @@ void waitForWifiNetworkConnect(void){
 }
 
 // Check whether the go file exists, and its contents
-uint32_t checkGoFile(void){
+uint8_t checkGoFile(void){
 
 	write_wifi_command("bump\r\n",3);
 	// reset the wifi buffer
@@ -392,5 +387,11 @@ uint32_t checkGoFile(void){
 
 
 
+
+}
+
+// Load the hex file into memory
+void loadHexFile(void){
+	// Load the stuff
 
 }

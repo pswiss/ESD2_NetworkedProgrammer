@@ -32,25 +32,18 @@ int main (void)
 	
 	// Main Loop //////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
-
-		/*// If user has pushed the button to enter web setup, enter this routine
-		if(wifi_setup_flag == true){
-
-			// Send the setup web string to the wifi chip
-			
-			write_wifi_command("setup web\r\n",3);
-
-			// Clear the flag
-			wifi_setup_flag = false;
-			waitForWifiNetworkConnect();
+		// If GoFile says go, then do things, otherwise wait
+		//if(checkGoFile()){
+		if(1){
+			Load_Hex_File();
+			Clear_Target();
+			SWD_Start();
+			SWD_Program();
+			SWD_Cleanup();
 		}
-
-		// If user has not requested web setup, try to capture and display an image
 		else{
-
-			checkGoFile();
-		}*/
-		checkGoFile();
-		delay_ms(5000);
+			delay_ms(5000);
+		}
+		delay_ms(5000);///xxxxxxxxxxxxxxxxxxxxxDELETE_MExxxxxxxxxxxxx
 	}
 }

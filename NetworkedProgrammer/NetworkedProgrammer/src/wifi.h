@@ -7,7 +7,6 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 */
 
-
 #ifndef WIFI_H_
 #define WIFI_H_
 
@@ -68,10 +67,6 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 // Use the edge interrupt mode to trigger on rise AND fall
 #define PUSH_BUTTON_ATTR               PIO_PULLUP | PIO_DEBOUNCE | PIO_IT_EDGE
 
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Variables
 volatile uint32_t received_byte_wifi;
@@ -81,14 +76,10 @@ volatile uint32_t input_pos_wifi;
 volatile uint8_t counts;
 // Variables: interrupt flag
 volatile bool wifi_setup_flag;
-
 volatile uint32_t uintreceivedMessage;
-
-#define maxWifiMessage				50
 volatile uint8_t rawRecievedMessage[maxWifiMessage];
-
-
 // Messages
+#define maxWifiMessage				50
 #define NO_MESSAGE					0
 
 #define NOT_CONNECTED				1
@@ -109,19 +100,13 @@ volatile uint8_t rawRecievedMessage[maxWifiMessage];
 #define RECIEVE_NONE				6
 #define msg_RECIEVE_NONE			"None"
 
-
 #define msg_WEBSOCKET_DISCONNECTED	"Websocket disconnected"
 #define msg_UNKNOWN_COMMAND			"Unknown command"
 
 #define DEFAULT						4000
 
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// function prototypes
+// General Function Prototypes
 void WIFI_USART_HANDLER(void);
 void process_incoming_byte_wifi(uint8_t);
 void wifi_command_response_handler(uint32_t, uint32_t);
@@ -132,15 +117,18 @@ void configure_wifi_comm_pin(void);
 void configure_wifi_web_setup_pin(void);
 void write_wifi_command(char* , uint8_t);
 void write_image_to_file(void);
-uint32_t checkGoFile(void);
 
-// A few functions I wrote to make main() a bit cleaner
+// Functions relating to programmer functions
+uint32_t checkGoFile(void);
+void loadHexFile(void);
+
+// A few functions to make main() a bit cleaner
 void resetWifi(void);
 void writeWifiConfigurationCommands(void);
 void waitForWifiNetworkConnect(void);
 
-// Camera stuff
-volatile int captured_image_start;
-volatile int captured_image_end;
+// Variables for Hex Files
+volatile uint32_t linesInHexFile;
+volatile uint8_t hexfile[100000];
 
 #endif /* WIFI_H_ */
