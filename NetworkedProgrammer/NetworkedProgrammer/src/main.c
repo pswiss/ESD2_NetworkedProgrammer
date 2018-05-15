@@ -4,6 +4,7 @@
 #include "timer_interface.h"
 #include "conf_clock.h"
 #include "conf_board.h"
+#include "ProgrammerInterface.h"
 
 // Global variables because 2/3 of us are mechanical engineers and that's just how we roll
 volatile uint32_t receivedMessage;
@@ -16,6 +17,7 @@ int main (void)
 	wdt_disable(WDT);
 	board_init();
 	
+	
 	// start the clock that counts the seconds
 	configure_tc();
 	tc_start(TC0, 0);
@@ -24,6 +26,9 @@ int main (void)
 	configure_usart_wifi();
 	configure_wifi_comm_pin();
 	configure_wifi_web_setup_pin();
+	
+	// Configure SWD Stuff
+	setupSWDPins();
 	
 	// Reset the wifi
 	resetWifi();
