@@ -51,6 +51,7 @@ void Clear_Target(void){
 
 // Perform all start configurations for SWD
 void SWD_Start(void ){
+	//////////////////////////////////////////////////////////////////
 	// Purely an output operation
 	configSWDPinsOutput();
 	
@@ -81,9 +82,12 @@ void SWD_Start(void ){
 	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_3;ii++){
 		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_3>>(STARTUP_MSGLEN_3-ii)));
 	}
-	
+	//////////////////////////////////////////////////////////////////
+	// Request device ID
+	uint32_t deviceTag = SWD_Comm(RQ_DP_READ_IDCODE, MSG_NULL);
 
 }
+
 
 // Program the hex file
 void SWD_Program(void ){

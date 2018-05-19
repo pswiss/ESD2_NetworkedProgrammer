@@ -96,6 +96,9 @@
 #define MASK_32BIT_1		0x00000001
 #define MASK_8BIT_1			0b00000001
 
+// Generic Messages
+#define MSG_NULL			0
+
 // Variables ///////////////////////////////////////////////////////////
 // Global Variables
 
