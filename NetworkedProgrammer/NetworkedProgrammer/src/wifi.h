@@ -76,8 +76,7 @@ volatile uint32_t input_pos_wifi;
 volatile uint8_t counts;
 // Variables: interrupt flag
 volatile bool wifi_setup_flag;
-volatile uint32_t uintreceivedMessage;
-volatile uint8_t rawRecievedMessage[maxWifiMessage];
+
 // Messages
 #define maxWifiMessage				50
 #define NO_MESSAGE					0
@@ -104,6 +103,9 @@ volatile uint8_t rawRecievedMessage[maxWifiMessage];
 #define msg_UNKNOWN_COMMAND			"Unknown command"
 
 #define DEFAULT						4000
+
+volatile uint32_t uintreceivedMessage;
+volatile uint8_t rawRecievedMessage[maxWifiMessage];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // General Function Prototypes

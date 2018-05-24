@@ -99,6 +99,7 @@ C_SRCS +=  \
 ../src/ASF/sam/drivers/twi/twi.c \
 ../src/ASF/sam/drivers/usart/usart.c \
 ../src/ASF/sam/drivers/wdt/wdt.c \
+../src/ProgrammerInterface.c \
 ../src/timer_interface.c \
 ../src/wifi.c \
 ../src/ASF/common/utils/stdio/write.c \
@@ -130,6 +131,7 @@ src/ASF/sam/drivers/pio/pio_handler.o \
 src/ASF/sam/drivers/twi/twi.o \
 src/ASF/sam/drivers/usart/usart.o \
 src/ASF/sam/drivers/wdt/wdt.o \
+src/ProgrammerInterface.o \
 src/timer_interface.o \
 src/wifi.o \
 src/ASF/common/utils/stdio/write.o \
@@ -154,6 +156,7 @@ src/ASF/sam/drivers/pio/pio_handler.o \
 src/ASF/sam/drivers/twi/twi.o \
 src/ASF/sam/drivers/usart/usart.o \
 src/ASF/sam/drivers/wdt/wdt.o \
+src/ProgrammerInterface.o \
 src/timer_interface.o \
 src/wifi.o \
 src/ASF/common/utils/stdio/write.o \
@@ -178,6 +181,7 @@ src/ASF/sam/drivers/pio/pio_handler.d \
 src/ASF/sam/drivers/twi/twi.d \
 src/ASF/sam/drivers/usart/usart.d \
 src/ASF/sam/drivers/wdt/wdt.d \
+src/ProgrammerInterface.d \
 src/timer_interface.d \
 src/wifi.d \
 src/ASF/common/utils/stdio/write.d \
@@ -202,6 +206,7 @@ src/ASF/sam/drivers/pio/pio_handler.d \
 src/ASF/sam/drivers/twi/twi.d \
 src/ASF/sam/drivers/usart/usart.d \
 src/ASF/sam/drivers/wdt/wdt.d \
+src/ProgrammerInterface.d \
 src/timer_interface.d \
 src/wifi.d \
 src/ASF/common/utils/stdio/write.d \
@@ -235,6 +240,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

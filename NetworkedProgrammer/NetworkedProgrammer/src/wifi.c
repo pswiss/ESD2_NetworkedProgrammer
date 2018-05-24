@@ -284,7 +284,7 @@ void waitForWifiNetworkConnect(void){
 }
 
 // Check whether the go file exists, and its contents
-uint8_t checkGoFile(void){
+uint32_t checkGoFile(void){
 
 	write_wifi_command("bump\r\n",3);
 	// reset the wifi buffer
@@ -384,9 +384,6 @@ uint8_t checkGoFile(void){
 		
 	}
 	
-
-
-
 
 }
 

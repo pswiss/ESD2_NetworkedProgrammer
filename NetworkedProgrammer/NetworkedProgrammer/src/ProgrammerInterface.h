@@ -9,28 +9,28 @@
 // Constants ///////////////////////////////////////////////////////////
 // Pin Definitions ALL THIS NEEDS TO BE UPDATED
 // SW CLK Definitions		OUTPUT
-#define SWCLK_ID            ID_PIOB
-#define SWCLK_PIO           PIOB
-#define SWCLK_PIN_MSK		PIO_PB4
-#define SWCLK_PIN			PIO_PB4_IDX
+#define SWCLK_ID            ID_PIOA
+#define SWCLK_PIO           PIOA
+#define SWCLK_PIN_MSK		PIO_PA2
+#define SWCLK_PIN			PIO_PA2_IDX
 
 // SW IO Definitions		INPUT / OUTPUT
-#define SWIO_ID				ID_PIOB
-#define SWIO_PIO			PIOB
-#define SWIO_PIN_MSK		PIO_PB5
-#define SWIO_PIN			PIO_PB5_IDX
+#define SWIO_ID				ID_PIOA
+#define SWIO_PIO			PIOA
+#define SWIO_PIN_MSK		PIO_PA3
+#define SWIO_PIN			PIO_PA3_IDX
 
 // Force Clear Memory Pin	OUTPUT
-#define MEMCLR_ID			ID_PIOB
-#define MEMCLR_PIO			PIOB
-#define MEMCLR_PIN_MSK		PIO_PB6
-#define MEMCLR_PIN			PIO_PB6_IDX
+#define MEMCLR_ID			ID_PIOA
+#define MEMCLR_PIO			PIOA
+#define MEMCLR_PIN_MSK		PIO_PA1
+#define MEMCLR_PIN			PIO_PA1_IDX
 
 // Force Reset Pin			OUTPUT
-#define FORCERST_ID			ID_PIOB
-#define FORCERST_PIO		PIOB
-#define FORCERST_PIN_MSK	PIO_PB7
-#define FORCERST_PIN		PIO_PB7_IDX
+#define FORCERST_ID			ID_PIOA
+#define FORCERST_PIO		PIOA
+#define FORCERST_PIN_MSK	PIO_PA0
+#define FORCERST_PIN		PIO_PA0_IDX
 
 // Communication Constants
 // Communication phase bit lengths
