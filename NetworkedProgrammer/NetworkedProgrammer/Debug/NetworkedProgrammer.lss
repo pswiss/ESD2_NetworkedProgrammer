@@ -1378,9 +1378,9 @@ void setupSWDPins(void){
   4007ba:	2000      	movs	r0, #0
   4007bc:	4b03      	ldr	r3, [pc, #12]	; (4007cc <setupSWDPins+0x48>)
   4007be:	4798      	blx	r3
-	ioport_set_pin_level(SWCLK_PIN, HIGH);
+	ioport_set_pin_level(FORCERST_PIN, HIGH);
   4007c0:	2101      	movs	r1, #1
-  4007c2:	2003      	movs	r0, #3
+  4007c2:	2000      	movs	r0, #0
   4007c4:	4b02      	ldr	r3, [pc, #8]	; (4007d0 <setupSWDPins+0x4c>)
   4007c6:	4798      	blx	r3
 }
