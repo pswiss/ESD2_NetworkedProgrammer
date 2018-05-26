@@ -18,7 +18,7 @@ void setupSWDPins(void){
 	ioport_set_pin_level(MEMCLR_PIN, LOW);
 	
 	ioport_set_pin_dir(FORCERST_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(SWCLK_PIN, LOW);
+	ioport_set_pin_level(FORCERST_PIN, HIGH);
 }
 
 // Configure SWD pins to be inputs
@@ -190,10 +190,10 @@ uint32_t SWD_Comm(uint8_t command, uint32_t data){
 
 // Clear the target device
 void Clear_Target(void){
-	ioport_set_pin_level(FORCERST_PIN,HIGH);
+	ioport_set_pin_level(FORCERST_PIN,LOW);
 	delay_ms(DURATION_CLEAR);
 	
-	ioport_set_pin_level(FORCERST_PIN,LOW);
+	ioport_set_pin_level(FORCERST_PIN,HIGH);
 	ioport_set_pin_level(MEMCLR_PIN,HIGH);
 	delay_ms(DURATION_CLEAR);
 	

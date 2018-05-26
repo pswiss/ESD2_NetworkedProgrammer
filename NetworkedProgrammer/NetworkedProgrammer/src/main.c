@@ -41,8 +41,8 @@ int main (void)
 		//if(checkGoFile()){
 		if(1){
 			//Load_Hex_File();
-			//Clear_Target();
-			SWD_Start();
+			Clear_Target();
+			//SWD_Start();
 			//SWD_Program();
 			//SWD_Cleanup();
 		}
