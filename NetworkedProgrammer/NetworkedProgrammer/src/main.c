@@ -40,12 +40,11 @@ int main (void)
 		// If GoFile says go, then do things, otherwise wait
 		//if(checkGoFile()){
 		if(1){
+			//Load_Hex_File();
+			//Clear_Target();
 			SWD_Start();
-			/*Load_Hex_File();
-			Clear_Target();
-			SWD_Start();
-			SWD_Program();
-			SWD_Cleanup();*/
+			//SWD_Program();
+			//SWD_Cleanup();
 		}
 		else{
 			delay_ms(5000);

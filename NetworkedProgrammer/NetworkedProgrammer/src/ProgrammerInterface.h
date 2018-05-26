@@ -11,14 +11,14 @@
 // SW CLK Definitions		OUTPUT
 #define SWCLK_ID            ID_PIOA
 #define SWCLK_PIO           PIOA
-#define SWCLK_PIN_MSK		PIO_PA2
-#define SWCLK_PIN			PIO_PA2_IDX
+#define SWCLK_PIN_MSK		PIO_PA3
+#define SWCLK_PIN			PIO_PA3_IDX
 
 // SW IO Definitions		INPUT / OUTPUT
 #define SWIO_ID				ID_PIOA
 #define SWIO_PIO			PIOA
-#define SWIO_PIN_MSK		PIO_PA3
-#define SWIO_PIN			PIO_PA3_IDX
+#define SWIO_PIN_MSK		PIO_PA2
+#define SWIO_PIN			PIO_PA2_IDX
 
 // Force Clear Memory Pin	OUTPUT
 #define MEMCLR_ID			ID_PIOA
@@ -40,8 +40,8 @@
 
 // Timings
 //us
-#define DURATION_SWCLK_HIGH	10
-#define DURATION_SWCLK_LOW	90
+#define DURATION_SWCLK_HIGH	1
+#define DURATION_SWCLK_LOW	9
 
 #define DURATION_ACKWAIT	1000
 
@@ -98,6 +98,9 @@
 
 // Generic Messages
 #define MSG_NULL			0
+
+// Flash Memory Values
+#define PROGRAM_MEMORY_START	0x00400000
 
 // Variables ///////////////////////////////////////////////////////////
 // Global Variables
