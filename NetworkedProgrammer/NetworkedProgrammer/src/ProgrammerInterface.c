@@ -51,6 +51,8 @@ void SWD_bitOut(Bool outBit){
 uint8_t SWD_bitIn(void){
 	ioport_set_pin_level(SWCLK_PIN,HIGH);
 	delay_us(DURATION_SWCLK_HIGH);
+
+	
 	
 	uint8_t reportLevel = ioport_get_pin_level(SWIO_PIN);
 	
