@@ -32,8 +32,8 @@ void configSWDPinsInput(void){
 // Configure SWD pins to be outputs
 void configSWDPinsOutput(void){
 	// Communication Pins Output: SWIO
-	ioport_set_pin_dir(SWCLK_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(SWCLK_PIN, LOW);
+	ioport_set_pin_dir(SWIO_PIN, IOPORT_DIR_OUTPUT);
+	ioport_set_pin_level(SWIO_PIN, HIGH);
 }
 
 // Bit-Bang Functions //////////////////////////////////////
