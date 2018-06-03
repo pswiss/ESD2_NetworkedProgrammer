@@ -34,7 +34,7 @@ int main (void)
 	while(true){
 
 		ioport_toggle_pin_level(LED_PIN);
-		delay_ms(1000);
+		delay_ms(100);
 		// Bulk of code: When pushbutton changes state, it throws and innterrupt. Here, we toggle the LED level when the interrupt is detected.
 		if(button_flag){
 			// Clear the flag
