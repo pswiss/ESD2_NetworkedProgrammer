@@ -1,193 +1,98 @@
 // Include Libraries
 #include "ProgrammerInterface.h"
+#include "hardcodedprogram.h"
 
 // Global Variables
+volatile uint8_t buffer_program[MAX_PROGRAM_SIZE] = hardprogram;
+volatile uint8_t program_addresses[PROGRAM_ADDRESS_SIZE][PROGRAM_LINE_LENGTH];
+volatile uint8_t program_data[PROGRAM_DATA_SIZE][PROGRAM_LINE_LENGTH];
 
 
 // Functions /////////////////////////////////////////////
-// Setup Pins
-void setupSWDPins(void){
-	// Set all pins as output, low
-	ioport_set_pin_dir(SWCLK_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(SWCLK_PIN, LOW);
-	
-	ioport_set_pin_dir(SWIO_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(SWIO_PIN, LOW);
-	
-	ioport_set_pin_dir(MEMCLR_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(MEMCLR_PIN, LOW);
-	
-	ioport_set_pin_dir(FORCERST_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(FORCERST_PIN, HIGH);
-}
-
-// Configure SWD pins to be inputs
-void configSWDPinsInput(void){
-	// Communication Pins Input: SWIO
-	ioport_set_pin_dir(SWIO_PIN, IOPORT_DIR_INPUT);
-	ioport_set_pin_mode(SWIO_PIN, IOPORT_MODE_PULLUP);
-	
-}
-
-// Configure SWD pins to be outputs
-void configSWDPinsOutput(void){
-	// Communication Pins Output: SWIO
-	ioport_set_pin_dir(SWIO_PIN, IOPORT_DIR_OUTPUT);
-	ioport_set_pin_level(SWIO_PIN, HIGH);
-}
-
-// Bit-Bang Functions //////////////////////////////////////
-// Bitbang: Write Bit over SWD
-void SWD_bitOut(Bool outBit){
-	ioport_set_pin_level(SWIO_PIN,outBit);
-	ioport_set_pin_level(SWCLK_PIN,HIGH);
-	delay_us(DURATION_SWCLK_HIGH);
-	
-	ioport_set_pin_level(SWCLK_PIN,LOW);
-	delay_us(DURATION_SWCLK_LOW);
-}
-
-// Bitbang: Read Bit over SWD
-uint32_t SWD_bitIn(void){
-	ioport_set_pin_level(SWCLK_PIN,HIGH);
-	delay_us(DURATION_SWCLK_HIGH);
-
-	
-	
-	uint8_t reportLevel = ioport_get_pin_level(SWIO_PIN);
-	
-	ioport_set_pin_level(SWCLK_PIN,LOW);
-	delay_us(DURATION_SWCLK_LOW);
-	
-	return reportLevel;
-}
-
-// Bitbang: Turnaround Bit
-void SWD_bitTurn(void){
-	SWD_bitOut(HIGH);
-}
-
-// Return the level of the ith bit of a given value
-Bool ithBitLevel(uint32_t checkByte, uint32_t ii){
-	// Bit shift the checkByte right, then use bit mask
-	return (((checkByte >> ii)&&MASK_32BIT_1)!=0);
-}
-
-// Bitbang: SWD Request
-void SWD_sendRequest(uint8_t requestByte){
-	// Set all pins to output
-	configSWDPinsOutput();
-	
-	// Send the bits in sequence, LSB first
-	for(int ii = 0; ii<LENGTH_SWD_REQUEST;ii++){
-		SWD_bitOut(ithBitLevel(requestByte,LENGTH_SWD_REQUEST-1-ii));
+// Helper functions:
+// Convert from ASCII to number (supports up to base 16)
+uint8_t ASCII_to_Num(uint8_t inputChar){
+	switch(inputChar){
+		case "0":
+			return 0;
+		case "1":
+			return 1;
+		case "2":
+			return 2;
+		case "3":
+			return 3;
+		case "4":
+			return 4;
+		case "5":
+			return 5;
+		case "6":
+			return 6;
+		case "7":
+			return 7;
+		case "8":
+			return 8;
+		case "9":
+			return 9;
+		case "A":
+			return 10;
+		case "B":
+			return 11;
+		case "C":
+			return 12;
+		case "D":
+			return 13;
+		case "E":
+			return 14;
+		case "F":
+			return 15;
 	}
 }
 
-// Bitbang: SWD Ack Read
-uint8_t SWD_AckGet(void){
-	uint8_t messageIn = 0;
-	
-	// Take in the three Ack Bits. Data comes in LSB first
-	for(uint8_t ii = 0; ii<LENGTH_SWD_ACK; ii++){
-		messageIn = messageIn||((SWD_bitIn()&&MASK_8BIT_1)<<ii);
-	}
-	
-	// Behavior changes due to Ack message processed in higher function
-	return messageIn;
-	
-}
 
-// Bitbang: Write Data
-void SWD_DataWrite(uint32_t dataToSend){
-	// Set all pins to output
-	configSWDPinsOutput();
+///////////////////////////
+// Interpret the given program
+void Parse_Program(void){// eventually put input file here?
+	uint32_t EOF_reached = 0;
+	uint32_t current_character = 0;
 	
-	uint8_t checksumValue = 0;
-	
-	// Send the bits in sequence, LSB first. Track checksum
-	for(int ii = 0; ii<LENGTH_SWD_DATA;ii++){
-		Bool sendBit = ithBitLevel(dataToSend,LENGTH_SWD_DATA-1-ii);
-		SWD_bitOut(sendBit);
-		checksumValue+=sendBit;
-	}
-	
-	// Implement the checksum bit: if odd, send 1, if even, send 0
-	if(checksumValue&&MASK_8BIT_1){
-		SWD_bitOut(1);
-	}
-	else{
-		SWD_bitOut(0);
-	}
-}
-
-//Bitbang: Read Data
-uint32_t SWD_DataRead(void){
-	uint32_t dataIn = 0;
-	
-	// Take in data Bits. Data comes in LSB first
-	for(uint8_t ii = 0; ii<LENGTH_SWD_DATA; ii++){
-		dataIn = dataIn||((SWD_bitIn()&&MASK_32BIT_1)<<ii);
-	}
-	
-	// Read one more bit for the parity bit (assume that everything went OK)
-	SWD_bitIn();
-	
-	//return the data
-	return dataIn;
-}
-
-
-// Generic function to perform an SWD message
-uint32_t SWD_Comm(uint8_t command, uint32_t data){
-	// Determine if Read or Write
-	if((command>>5)&&MASK_8BIT_1){
-		// If 1, Read
-		uint32_t okFlag = 0;
-		
-		while(!okFlag){
-			configSWDPinsOutput();
-			SWD_sendRequest(command);
+	// Go through entire program
+	while(EOF_reached!=1){
+		// Check if I am looking at the start of the line
+		if(buffer_program[current_character]==":"){
+			// Check the byte count
+			uint32_t byteCount = ASCII_to_Num(buffer_program[current_character+1])*16+ASCII_to_Num(buffer_program[current_character+2]);
 			
-			SWD_bitTurn();
-			configSWDPinsInput();
+			// Check the record type
+			switch(buffer_program[current_character+OFFSET_RECORDTYPE]){
+				case HEX_DATA:
+					// Check the address, put it into the program_address array
+					
+					// Gather the data, put it into the program_data array
+					break;
+				case HEX_EOF:
+					break;
+				case HEX_EXTENDED_SEGMENT_ADDRESS:
+					break;
+				case HEX_START_SEGMENT_ADDRESS:
+					break;
+				case HEX_EXTENDED_LINEAR_ADDRESS:
+					break;
+				case HEX_START_LINEAR_ADDRESS:
+					break;
+
+			}
 			
-			// Will break out if get Ack ok otherwise will have to repeat
-			if(SWD_AckGet()==MSG_ACK_OK){
-				okFlag = 1;
-			}
-			else{
-				delay_us(DURATION_ACKWAIT);
-			}
+			
+			
 		}
-		// No turn for read
-		return SWD_DataRead();
-	}
-	else{
-		// If 0, Write
-		uint32_t okFlag = 0;
-		
-		while(!okFlag){
-			configSWDPinsOutput();
-			SWD_sendRequest(command);
-			
-			SWD_bitTurn();
-			configSWDPinsInput();
-			
-			// Will break out if get Ack ok otherwise will have to repeat
-			if(SWD_AckGet()==MSG_ACK_OK){
-				okFlag = 1;
-			}
-			else{
-				delay_us(DURATION_ACKWAIT);
-			}
+		else{
+			// Otherwise increment what character I'm looking at
+			current_character += 1;
 		}
-		configSWDPinsOutput();
-		SWD_bitTurn();
-		SWD_DataWrite(data);
-		return 0;
 	}
+	
 }
+
 
 // Clear the target device
 void Clear_Target(void){
@@ -200,58 +105,4 @@ void Clear_Target(void){
 	
 	ioport_set_pin_level(MEMCLR_PIN,LOW);
 	delay_ms(DURATION_CLEAR);
-}
-
-//High Level SWD Commands /////////////////////////////////////////////////
-// Perform all start configurations for SWD
-void SWD_Start(void ){
-	//////////////////////////////////////////////////////////////////
-	// Purely an output operation
-	configSWDPinsOutput();
-	
-	// Go from JTAG to SWD
-	// Write the first reset message
-	for(uint32_t ii = 0; ii < STARTUP_HIGH_1;ii++){
-		SWD_bitOut(HIGH);
-	}
-	// Write the first message
-	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_1;ii++){
-		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_1>>(STARTUP_MSGLEN_1-ii)));
-	}
-	
-	// Write the second reset message
-	for(uint32_t ii = 0; ii < STARTUP_HIGH_2;ii++){
-		SWD_bitOut(HIGH);
-	}
-	/*
-	// Write the second message
-	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_2;ii++){
-		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_2>>(STARTUP_MSGLEN_2-ii)));
-	}
-	
-	// Write the third reset message
-	for(uint32_t ii = 0; ii < STARTUP_HIGH_3;ii++){
-		SWD_bitOut(HIGH);
-	}
-	// Write the third message
-	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_3;ii++){
-		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_3>>(STARTUP_MSGLEN_3-ii)));
-	}*/
-	//////////////////////////////////////////////////////////////////
-	// Request device ID
-	uint32_t deviceTag = SWD_Comm(RQ_DP_READ_IDCODE, MSG_NULL);
-
-	deviceTag=0;
-
-}
-
-
-// Program the hex file
-void SWD_Program(void ){
-
-}
-
-// Perform all end configurations for SWD
-void SWD_Cleanup(void ){
-
 }

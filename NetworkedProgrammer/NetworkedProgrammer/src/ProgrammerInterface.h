@@ -5,20 +5,13 @@
 #include <asf.h>
 
 // Include necessary libraries /////////////////////////////////////////
+#include "hardcodedprogram.h"
+
+#include <string.h>
+#include <stdio.h>
 
 // Constants ///////////////////////////////////////////////////////////
 // Pin Definitions ALL THIS NEEDS TO BE UPDATED
-// SW CLK Definitions		OUTPUT
-#define SWCLK_ID            ID_PIOA
-#define SWCLK_PIO           PIOA
-#define SWCLK_PIN_MSK		PIO_PA3
-#define SWCLK_PIN			PIO_PA3_IDX
-
-// SW IO Definitions		INPUT / OUTPUT
-#define SWIO_ID				ID_PIOA
-#define SWIO_PIO			PIOA
-#define SWIO_PIN_MSK		PIO_PA2
-#define SWIO_PIN			PIO_PA2_IDX
 
 // Force Clear Memory Pin	OUTPUT
 #define MEMCLR_ID			ID_PIOA
@@ -33,92 +26,58 @@
 #define FORCERST_PIN		PIO_PA0_IDX
 
 // Communication Constants
-// Communication phase bit lengths
-#define LENGTH_SWD_REQUEST	8
-#define LENGTH_SWD_ACK		3
-#define LENGTH_SWD_DATA		32
+// Communication sizes
+#define MAX_PROGRAM_SIZE		0x40000
+#define PROGRAM_ADDRESS_SIZE	4
+#define PROGRAM_LINE_LENGTH		450
+
+// Hex File Constants
+#define OFFSET_BYTECOUNT		1
+#define OFFSET_ADDRESS			3
+#define OFFSET_RECORDTYPE		7
+#define OFFSET_DATA				9
+
+// Hex File record types
+#define HEX_DATA						0
+#define HEX_EOF							1
+#define HEX_EXTENDED_SEGMENT_ADDRESS	2
+#define HEX_START_SEGMENT_ADDRESS		3
+#define HEX_EXTENDED_LINEAR_ADDRESS		4
+#define HEX_START_LINEAR_ADDRESS		5
 
 // Timings
 //us
-#define DURATION_SWCLK_HIGH	1
-#define DURATION_SWCLK_LOW	9
-
-#define DURATION_ACKWAIT	1000
 
 //ms
-#define DURATION_CLEAR		100
-#define DURATION_AFTER_WAIT	5
+#define DURATION_CLEAR			50
 
 // Commonly-Used Communication Messages
-// ACK MESSAGES
-#define MSG_ACK_OK			0b00000001
-#define MSG_ACK_WAIT		0b00000010
-#define MSG_ACK_FAULT		0b00000100
-
-// SWD Requests
-#define RQ_AP_READ_BASE		0b11101101
-#define RQ_AP_READ_BD0		0b11100001
-#define RQ_AP_READ_BD1		0b11110001
-#define RQ_AP_READ_BD2		0b11101101
-#define RQ_AP_READ_BD3		0b11111001
-#define RQ_AP_READ_DRW		0b11111001
-
-#define RQ_AP_WRITE_BD0		0b11000101
-#define RQ_AP_WRITE_BD1		0b11010001
-#define RQ_AP_WRITE_BD2		0b11001001
-#define RQ_AP_WRITE_BD3		0b11011101
-#define RQ_AP_WRITE_CSW		0b11000101
-#define RQ_AP_WRITE_DRW		0b11011101
-#define RQ_AP_WRITE_TAR		0b11010001
-
-#define RQ_DP_READ_CTRLSTAT	0b10110001
-#define RQ_DP_READ_IDCODE	0b10100101
-#define RQ_DP_READ_RDBUFF	0b10111101
-
-#define RQ_DP_WRITE_ABORT	0b10000001
-#define RQ_DP_WRITE_CTRLSTAT	0b10010101
-#define RQ_DP_WRITE_SELECT	0b10001101
-
-// STARTUP
-#define STARTUP_HIGH_1		56
-#define STARTUP_MSG_1		0111100111100111
-#define STARTUP_MSGLEN_1	16
-
-#define STARTUP_HIGH_2		59
-#define STARTUP_MSG_2		0b0110110110110
-#define STARTUP_MSGLEN_2	13
-
-#define STARTUP_HIGH_3		59
-#define STARTUP_MSG_3		0b0000000000000000
-#define STARTUP_MSGLEN_3	16
-
-// Bit Masks
-#define MASK_32BIT_1		0x00000001
-#define MASK_8BIT_1			0b00000001
-
-// Generic Messages
-#define MSG_NULL			0
 
 // Flash Memory Values
 #define PROGRAM_MEMORY_START	0x00400000
 
 // Variables ///////////////////////////////////////////////////////////
 // Global Variables
+volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
 
 // Interrupt Flags
 
 // Messages
 
 // Function Prototypes /////////////////////////////////////////////////
-void setupSWDPins(void);
-void configSWDPinsInput(void);
 void Clear_Target(void);
-void SWD_Start(void);
-void SWD_Program(void);
-void SWD_Cleanup(void);
 
-void SWD_bitOut(Bool );
-uint8_t SWD_bitIn(void );
-void SWD_bitTurn(void);
+void configure_usart_programmer(void);
+void configure_programmer_interfacePins(void);
+
+void Load_Hex_File(void);
+void Parse_Program(void);
+
+void Write_Program(void);
+
+void Cleanup_Program(void);
+
+uint8_t ASCII_to_Num(uint8_t);
+
 
 #endif /* PROGRAMMERINTERFACE_H_ */

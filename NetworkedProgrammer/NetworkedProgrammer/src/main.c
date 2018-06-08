@@ -27,8 +27,9 @@ int main (void)
 	configure_wifi_comm_pin();
 	configure_wifi_web_setup_pin();
 	
-	// Configure SWD Stuff
-	setupSWDPins();
+	// Configure the Wifi programming communication stuff
+	//configure_usart_programmer();
+	//configure_programmer_interfacePins();
 	
 	// Reset the wifi
 	resetWifi();
@@ -42,9 +43,10 @@ int main (void)
 		if(1){
 			//Load_Hex_File();
 			//Clear_Target();
-			SWD_Start();
-			//SWD_Program();
-			//SWD_Cleanup();
+			Parse_Program();
+			//Write_Program();
+			//Cleanup_Program();
+			
 		}
 		else{
 			delay_ms(5000);

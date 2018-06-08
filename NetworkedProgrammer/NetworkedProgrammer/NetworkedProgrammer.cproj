@@ -591,6 +591,9 @@
     <Compile Include="src\ASF\sam\drivers\wdt\wdt.c">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\hardcodedprogram.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ProgrammerInterface.c">
       <SubType>compile</SubType>
     </Compile>
