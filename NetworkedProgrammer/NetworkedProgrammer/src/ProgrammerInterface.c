@@ -48,7 +48,7 @@ void SWD_bitOut(Bool outBit){
 }
 
 // Bitbang: Read Bit over SWD
-uint8_t SWD_bitIn(void){
+uint32_t SWD_bitIn(void){
 	ioport_set_pin_level(SWCLK_PIN,HIGH);
 	delay_us(DURATION_SWCLK_HIGH);
 
@@ -68,7 +68,7 @@ void SWD_bitTurn(void){
 }
 
 // Return the level of the ith bit of a given value
-Bool ithBitLevel(uint32_t checkByte, uint8_t ii){
+Bool ithBitLevel(uint32_t checkByte, uint32_t ii){
 	// Bit shift the checkByte right, then use bit mask
 	return (((checkByte >> ii)&&MASK_32BIT_1)!=0);
 }
@@ -80,8 +80,7 @@ void SWD_sendRequest(uint8_t requestByte){
 	
 	// Send the bits in sequence, LSB first
 	for(int ii = 0; ii<LENGTH_SWD_REQUEST;ii++){
-		Bool sendBit = ithBitLevel(requestByte,LENGTH_SWD_REQUEST-1-ii);
-		SWD_bitOut(sendBit);
+		SWD_bitOut(ithBitLevel(requestByte,LENGTH_SWD_REQUEST-1-ii));
 	}
 }
 
@@ -186,7 +185,7 @@ uint32_t SWD_Comm(uint8_t command, uint32_t data){
 		configSWDPinsOutput();
 		SWD_bitTurn();
 		SWD_DataWrite(data);
-		return 1;
+		return 0;
 	}
 }
 
@@ -224,6 +223,7 @@ void SWD_Start(void ){
 	for(uint32_t ii = 0; ii < STARTUP_HIGH_2;ii++){
 		SWD_bitOut(HIGH);
 	}
+	/*
 	// Write the second message
 	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_2;ii++){
 		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_2>>(STARTUP_MSGLEN_2-ii)));
@@ -236,7 +236,7 @@ void SWD_Start(void ){
 	// Write the third message
 	for(uint32_t ii = 0; ii < STARTUP_MSGLEN_3;ii++){
 		SWD_bitOut(MASK_32BIT_1&&(STARTUP_MSG_3>>(STARTUP_MSGLEN_3-ii)));
-	}
+	}*/
 	//////////////////////////////////////////////////////////////////
 	// Request device ID
 	uint32_t deviceTag = SWD_Comm(RQ_DP_READ_IDCODE, MSG_NULL);
