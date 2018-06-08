@@ -54,6 +54,7 @@ uint8_t ASCII_to_Num(uint8_t inputChar){
 void Parse_Program(void){// eventually put input file here?
 	uint32_t EOF_reached = 0;
 	uint32_t current_character = 0;
+	uint32_t current_line = 0;
 	
 	// Go through entire program
 	while(EOF_reached!=1){
@@ -66,10 +67,16 @@ void Parse_Program(void){// eventually put input file here?
 			switch(buffer_program[current_character+OFFSET_RECORDTYPE]){
 				case HEX_DATA:
 					// Check the address, put it into the program_address array
+					for(uint32_t jj = 0; jj < PROGRAM_ADDRESS_SIZE){
+						program_addresses[jj][current_line] = buffer_program[current_character+OFFSET_ADDRESS+jj];
+					}
 					
 					// Gather the data, put it into the program_data array
+					
+					current_line++;
 					break;
 				case HEX_EOF:
+					EOF_reached = 1;
 					break;
 				case HEX_EXTENDED_SEGMENT_ADDRESS:
 					break;
@@ -82,7 +89,8 @@ void Parse_Program(void){// eventually put input file here?
 
 			}
 			
-			
+			// Jump to next colon
+			current_character = current_character+OFFSET_DATA+2+byteCount;
 			
 		}
 		else{

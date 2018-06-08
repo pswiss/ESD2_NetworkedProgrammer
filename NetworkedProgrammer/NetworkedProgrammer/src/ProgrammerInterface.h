@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#define <xmodem.h>
 
 // Constants ///////////////////////////////////////////////////////////
 // Pin Definitions ALL THIS NEEDS TO BE UPDATED
@@ -29,6 +30,7 @@
 // Communication sizes
 #define MAX_PROGRAM_SIZE		0x40000
 #define PROGRAM_ADDRESS_SIZE	4
+#define PROGRAM_DATA_SIZE		16
 #define PROGRAM_LINE_LENGTH		450
 
 // Hex File Constants
