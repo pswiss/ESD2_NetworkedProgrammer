@@ -6,8 +6,6 @@ src\ASF\common\utils\stdio\read.c
 
 src\ASF\sam\drivers\pio\pio_handler.c
 
-src\ASF\sam\drivers\twi\twi.c
-
 src\ASF\sam\drivers\usart\usart.c
 
 src\ASF\sam\drivers\wdt\wdt.c

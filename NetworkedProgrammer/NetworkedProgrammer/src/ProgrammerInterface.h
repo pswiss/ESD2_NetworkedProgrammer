@@ -27,7 +27,7 @@
 
 // Communication Constants
 // Communication sizes
-#define MAX_PROGRAM_SIZE		0x40000
+#define MAX_PROGRAM_SIZE		60000
 #define PROGRAM_ADDRESS_SIZE	4
 #define PROGRAM_DATA_SIZE		32
 #define PROGRAM_LINE_LENGTH		450
@@ -55,14 +55,11 @@
 // Commonly-Used Communication Messages
 
 // Flash Memory Values
-#define PROGRAM_MEMORY_START	0x00400000
+#define PROGRAM_MEMORY_START	0x400000
 
 // Variables ///////////////////////////////////////////////////////////
 // Global Variables
 volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
-volatile uint8_t program_addresses[PROGRAM_ADDRESS_SIZE][PROGRAM_LINE_LENGTH];
-volatile uint8_t program_data[PROGRAM_DATA_SIZE][PROGRAM_LINE_LENGTH];
-volatile uint8_t program_datalength[PROGRAM_LINE_LENGTH];
 
 // Interrupt Flags
 

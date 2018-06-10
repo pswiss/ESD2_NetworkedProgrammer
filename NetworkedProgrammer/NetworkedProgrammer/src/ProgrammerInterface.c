@@ -4,9 +4,6 @@
 
 // Global Variables
 volatile uint8_t buffer_program[MAX_PROGRAM_SIZE] = hardprogram;
-volatile uint8_t program_addresses[PROGRAM_ADDRESS_SIZE][PROGRAM_LINE_LENGTH];
-volatile uint8_t program_data[PROGRAM_DATA_SIZE][PROGRAM_LINE_LENGTH];
-volatile uint8_t program_datalength[PROGRAM_LINE_LENGTH];
 
 
 // Functions /////////////////////////////////////////////
@@ -87,7 +84,6 @@ uint8_t Num_to_ASCII(uint8_t inputNum){
 	}
 }
 
-
 ///////////////////////////
 // Interpret the given program
 void Parse_Program(void){// eventually put input file here?
@@ -101,11 +97,23 @@ void Parse_Program(void){// eventually put input file here?
 		if(buffer_program[current_character]==':'){
 			// Check the byte count
 			uint32_t byteCount = ASCII_to_Num(buffer_program[current_character+1])*16+ASCII_to_Num(buffer_program[current_character+2]);
-			program_datalength[current_line] = byteCount;
-
+			
+			uint32_t addressValue = 0;
 			// Check the record type
 			switch(buffer_program[current_character+OFFSET_RECORDTYPE]){
 				case HEX_DATA:
+					// Reconstruct the value of the address
+					addressValue = PROGRAM_MEMORY_START + 
+										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+0])*0x1000 +
+										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+1])*0x100 +
+										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+2])*0x10 +
+										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+0]);
+
+					// Loop through for each byte to send and send it
+					
+					// Format for writing a byte: 'O'AAAAAA','CC'#'
+					//sprintf
+					/*
 					// Check the address, put it into the program_address array
 					for(uint32_t jj = 0; jj < PROGRAM_ADDRESS_SIZE; jj++){
 						program_addresses[jj][current_line] = buffer_program[current_character+OFFSET_ADDRESS+jj];
@@ -114,9 +122,7 @@ void Parse_Program(void){// eventually put input file here?
 					// Gather the data, put it into the program_data array
 					for(uint32_t jj = 0; jj < byteCount*2; jj++){
 						program_data[jj][current_line] = buffer_program[current_character+OFFSET_DATA+jj];
-					}
-					
-					current_line++;
+					}*/
 					break;
 				case HEX_EOF:
 					EOF_reached = 1;
