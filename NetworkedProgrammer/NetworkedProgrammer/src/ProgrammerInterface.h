@@ -6,6 +6,8 @@
 
 // Include necessary libraries /////////////////////////////////////////
 #include "hardcodedprogram.h"
+#include "Programmer_USART.h"
+#include "ProgramProperties.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -26,11 +28,6 @@
 #define FORCERST_PIN		PIO_PA0_IDX
 
 // Communication Constants
-// Communication sizes
-#define MAX_PROGRAM_SIZE		25000
-#define PROGRAM_ADDRESS_SIZE	4
-#define PROGRAM_DATA_SIZE		32
-#define PROGRAM_LINE_LENGTH		450
 
 // Hex File Constants
 #define OFFSET_BYTECOUNT		1
@@ -67,6 +64,7 @@ volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
 
 // Function Prototypes /////////////////////////////////////////////////
 void Clear_Target(void);
+void Reset_Target(void);
 
 void configure_usart_programmer(void);
 void configure_programmer_interfacePins(void);
@@ -75,6 +73,7 @@ void Load_Hex_File(void);
 void Write_Program(void);
 
 void Cleanup_Program(void);
+
 
 uint8_t ASCII_to_Num(uint8_t);
 uint8_t Num_to_ASCII(uint8_t);

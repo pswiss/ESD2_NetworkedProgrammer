@@ -9,7 +9,9 @@ volatile uint8_t buffer_program[MAX_PROGRAM_SIZE] = hardprogram;
 // Functions /////////////////////////////////////////////
 //////////////////////////////////////////////////////////
 
-// Helper functions:
+// USART Functions ///////////////////////////////////////
+
+// Helper Functions //////////////////////////////////////
 // Convert from ASCII to number (supports up to base 16)
 uint8_t ASCII_to_Num(uint8_t inputChar){
 	switch(inputChar){
@@ -86,7 +88,7 @@ uint8_t Num_to_ASCII(uint8_t inputNum){
 	}
 }
 
-///////////////////////////
+// Programmer Functions ///////////////////////////////////
 // Interpret the given program
 void Write_Program(void){// eventually put input file here?
 	uint8_t EOF_reached = 0;
@@ -94,8 +96,10 @@ void Write_Program(void){// eventually put input file here?
 	uint32_t current_line = 0;
 
 	// A few initialization writes
-	uint8_t* initWrites[2] = "T#";
-	program_usart_writeline(&initWrites,3);
+	uint8_t* initWrites[2];
+	initWrites[0] = 0x54;
+	initWrites[1] = 0x23;
+	write_prog_command(&initWrites,1);
 	
 	// Go through entire program
 	while(EOF_reached!=1){
@@ -129,7 +133,7 @@ void Write_Program(void){// eventually put input file here?
 						sprintf(boot_write_string, "O%x,%x#",addressValue,byteToWrite);
 
 						// Write the string to the attached chip
-						program_usart_writeline(&boot_write_string,1);
+						write_prog_command(&boot_write_string,1);
 					}
 					break;
 				case HEX_EOF:

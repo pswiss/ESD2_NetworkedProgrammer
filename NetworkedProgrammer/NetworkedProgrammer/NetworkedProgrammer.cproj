@@ -574,6 +574,15 @@
     <Compile Include="src\ProgrammerInterface.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Programmer_USART.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Programmer_USART.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\ProgramProperties.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\timer_interface.c">
       <SubType>compile</SubType>
     </Compile>

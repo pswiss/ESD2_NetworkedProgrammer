@@ -43,7 +43,7 @@ int main (void)
 		if(1){
 			//Load_Hex_File();
 			//Clear_Target();
-			Parse_Program();
+			//Parse_Program();
 			//Write_Program();
 			//Cleanup_Program();
 			

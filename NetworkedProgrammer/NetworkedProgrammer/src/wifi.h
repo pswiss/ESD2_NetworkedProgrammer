@@ -16,7 +16,7 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 // Include necessary libraries
 #include <string.h>
 #include <stdio.h>
-#include "ProgrammerInterface.h"
+#include "ProgramProperties.h"
 
 // Pin Definitions: USART
 /** USART0 pin RX */

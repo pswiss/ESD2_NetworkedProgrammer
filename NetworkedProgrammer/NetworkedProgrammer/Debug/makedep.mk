@@ -12,6 +12,8 @@ src\ASF\sam\drivers\wdt\wdt.c
 
 src\ProgrammerInterface.c
 
+src\Programmer_USART.c
+
 src\timer_interface.c
 
 src\wifi.c
