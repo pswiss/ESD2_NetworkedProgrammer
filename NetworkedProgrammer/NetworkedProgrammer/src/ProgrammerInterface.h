@@ -9,7 +9,6 @@
 
 #include <string.h>
 #include <stdio.h>
-#define <xmodem.h>
 
 // Constants ///////////////////////////////////////////////////////////
 // Pin Definitions ALL THIS NEEDS TO BE UPDATED
@@ -30,7 +29,7 @@
 // Communication sizes
 #define MAX_PROGRAM_SIZE		0x40000
 #define PROGRAM_ADDRESS_SIZE	4
-#define PROGRAM_DATA_SIZE		16
+#define PROGRAM_DATA_SIZE		32
 #define PROGRAM_LINE_LENGTH		450
 
 // Hex File Constants
@@ -61,6 +60,9 @@
 // Variables ///////////////////////////////////////////////////////////
 // Global Variables
 volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
+volatile uint8_t program_addresses[PROGRAM_ADDRESS_SIZE][PROGRAM_LINE_LENGTH];
+volatile uint8_t program_data[PROGRAM_DATA_SIZE][PROGRAM_LINE_LENGTH];
+volatile uint8_t program_datalength[PROGRAM_LINE_LENGTH];
 
 // Interrupt Flags
 
@@ -80,6 +82,7 @@ void Write_Program(void);
 void Cleanup_Program(void);
 
 uint8_t ASCII_to_Num(uint8_t);
+uint8_t Num_to_ASCII(uint8_t);
 
 
 #endif /* PROGRAMMERINTERFACE_H_ */
