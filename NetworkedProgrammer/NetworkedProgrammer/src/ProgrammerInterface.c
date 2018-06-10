@@ -1,12 +1,14 @@
 // Include Libraries
 #include "ProgrammerInterface.h"
-#include "hardcodedprogram.h"
+//#include "hardcodedprogram.h"
 
 // Global Variables
 volatile uint8_t buffer_program[MAX_PROGRAM_SIZE] = hardprogram;
 
-
+//////////////////////////////////////////////////////////
 // Functions /////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
 // Helper functions:
 // Convert from ASCII to number (supports up to base 16)
 uint8_t ASCII_to_Num(uint8_t inputChar){
@@ -86,10 +88,14 @@ uint8_t Num_to_ASCII(uint8_t inputNum){
 
 ///////////////////////////
 // Interpret the given program
-void Parse_Program(void){// eventually put input file here?
+void Write_Program(void){// eventually put input file here?
 	uint8_t EOF_reached = 0;
 	uint8_t current_character = 0;
 	uint32_t current_line = 0;
+
+	// A few initialization writes
+	uint8_t* initWrites[2] = "T#";
+	program_usart_writeline(&initWrites,3);
 	
 	// Go through entire program
 	while(EOF_reached!=1){
@@ -99,6 +105,8 @@ void Parse_Program(void){// eventually put input file here?
 			uint32_t byteCount = ASCII_to_Num(buffer_program[current_character+1])*16+ASCII_to_Num(buffer_program[current_character+2]);
 			
 			uint32_t addressValue = 0;
+			uint8_t byteToWrite = 0;
+
 			// Check the record type
 			switch(buffer_program[current_character+OFFSET_RECORDTYPE]){
 				case HEX_DATA:
@@ -110,19 +118,19 @@ void Parse_Program(void){// eventually put input file here?
 										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+0]);
 
 					// Loop through for each byte to send and send it
-					
-					// Format for writing a byte: 'O'AAAAAA','CC'#'
-					//sprintf
-					/*
-					// Check the address, put it into the program_address array
-					for(uint32_t jj = 0; jj < PROGRAM_ADDRESS_SIZE; jj++){
-						program_addresses[jj][current_line] = buffer_program[current_character+OFFSET_ADDRESS+jj];
+					for(uint32_t jj = 0; jj < byteCount; jj++){
+						// Read in the byte to write
+						byteToWrite = ASCII_to_Num(buffer_program[current_character+OFFSET_DATA+jj*2])*0x10 +
+										ASCII_to_Num(buffer_program[current_character+OFFSET_DATA+jj*2+1]);
+						
+						// Create the string to write
+						// Format for writing a byte: 'O'AAAAAA','CC'#'
+						uint8_t boot_write_string[17];
+						sprintf(boot_write_string, "O%x,%x#",addressValue,byteToWrite);
+
+						// Write the string to the attached chip
+						program_usart_writeline(&boot_write_string,1);
 					}
-					
-					// Gather the data, put it into the program_data array
-					for(uint32_t jj = 0; jj < byteCount*2; jj++){
-						program_data[jj][current_line] = buffer_program[current_character+OFFSET_DATA+jj];
-					}*/
 					break;
 				case HEX_EOF:
 					EOF_reached = 1;
@@ -153,7 +161,6 @@ void Parse_Program(void){// eventually put input file here?
 	}
 }
 
-
 // Clear the target device
 void Clear_Target(void){
 	ioport_set_pin_level(FORCERST_PIN,LOW);
@@ -165,4 +172,11 @@ void Clear_Target(void){
 	
 	ioport_set_pin_level(MEMCLR_PIN,LOW);
 	delay_ms(DURATION_CLEAR);
+}
+
+// Reset the target device
+void Reset_Target(void){
+	ioport_set_pin_level(FORCERST_PIN,LOW);
+	delay_ms(DURATION_CLEAR);
+	ioport_set_pin_level(FORCERST_PIN,HIGH);
 }

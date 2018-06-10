@@ -27,7 +27,7 @@
 
 // Communication Constants
 // Communication sizes
-#define MAX_PROGRAM_SIZE		60000
+#define MAX_PROGRAM_SIZE		25000
 #define PROGRAM_ADDRESS_SIZE	4
 #define PROGRAM_DATA_SIZE		32
 #define PROGRAM_LINE_LENGTH		450
@@ -72,8 +72,6 @@ void configure_usart_programmer(void);
 void configure_programmer_interfacePins(void);
 
 void Load_Hex_File(void);
-void Parse_Program(void);
-
 void Write_Program(void);
 
 void Cleanup_Program(void);

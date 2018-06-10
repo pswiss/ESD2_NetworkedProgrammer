@@ -28,7 +28,7 @@ volatile uint8_t rawRecievedMessage[maxWifiMessage];
 
 // Variables for Hex Files
 volatile uint32_t linesInHexFile;
-volatile uint8_t hexfile[100000];
+volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
 
 
 /////////////////////////////////////////////////////////////////////

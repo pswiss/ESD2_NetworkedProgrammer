@@ -16,6 +16,7 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 // Include necessary libraries
 #include <string.h>
 #include <stdio.h>
+#include "ProgrammerInterface.h"
 
 // Pin Definitions: USART
 /** USART0 pin RX */
@@ -43,7 +44,7 @@ of the pin used for wifi interfaceoiasjdfpijasdf
 #define USART_IRQn					USART0_IRQn
 #define ALL_INTERRUPT_MASK			0xffffffff
 #define MAX_INPUT_WIFI				1000
-#define WIFI_RX_BUFF_SIZE			10000
+#define WIFI_RX_BUFF_SIZE			25000
 	
 // Command Complete Pin configuration: PA12
 #define WIFI_COM_COMPLETE_ID		ID_PIOA
@@ -131,6 +132,6 @@ void waitForWifiNetworkConnect(void);
 
 // Variables for Hex Files
 volatile uint32_t linesInHexFile;
-volatile uint8_t hexfile[100000];
+volatile uint8_t buffer_program[MAX_PROGRAM_SIZE];
 
 #endif /* WIFI_H_ */
