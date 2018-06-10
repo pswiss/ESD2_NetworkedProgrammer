@@ -42,7 +42,7 @@ volatile uint32_t received_byte_prog;
 volatile bool new_rx_prog;
 volatile uint8_t buffer_prog[MAX_INPUT_PROG];
 volatile uint32_t input_pos_prog;
-volatile uint8_t counts;
+
 // Variables: interrupt flag
 volatile bool prog_setup_flag;
 

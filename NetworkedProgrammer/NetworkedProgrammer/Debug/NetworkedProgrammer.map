@@ -1511,6 +1511,8 @@ Discarded input sections
                 0x00000000       0x74 src/Programmer_USART.o
  .text.sysclk_get_main_hz
                 0x00000000       0x1c src/Programmer_USART.o
+ .text.sysclk_get_cpu_hz
+                0x00000000       0x14 src/Programmer_USART.o
  .text.sysclk_get_peripheral_hz
                 0x00000000       0x14 src/Programmer_USART.o
  .text.sysclk_enable_peripheral_clock
@@ -1527,8 +1529,8 @@ Discarded input sections
  .text.configure_usart_prog
                 0x00000000       0xa8 src/Programmer_USART.o
  .text.write_prog_command
-                0x00000000       0x58 src/Programmer_USART.o
- .bss.ul_sysclk.8574
+                0x00000000       0x7c src/Programmer_USART.o
+ .bss.ul_sysclk.8572
                 0x00000000        0x4 src/Programmer_USART.o
  .debug_macro   0x00000000      0x8c8 src/Programmer_USART.o
  .debug_macro   0x00000000      0x16d src/Programmer_USART.o
@@ -1893,6 +1895,7 @@ Discarded input sections
  .debug_macro   0x00000000       0x2e src/timer_interface.o
  .debug_macro   0x00000000       0x10 src/timer_interface.o
  .debug_macro   0x00000000       0x16 src/timer_interface.o
+ COMMON         0x00000000        0x0 src/timer_interface.o
  .group         0x00000000        0x8 src/wifi.o
  .group         0x00000000        0x8 src/wifi.o
  .group         0x00000000        0x8 src/wifi.o
@@ -2022,7 +2025,6 @@ Discarded input sections
                 0x00000000        0x1 src/wifi.o
  .text.ioport_get_pin_level
                 0x00000000       0x4e src/wifi.o
- .bss.counts    0x00000000        0x1 src/wifi.o
  .text.write_wifi_command
                 0x00000000       0x58 src/wifi.o
  .text.writeWifiConfigurationCommands
@@ -6380,7 +6382,7 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
                 0x2000043c                . = ALIGN (0x4)
                 0x2000043c                _erelocate = .
 
-.bss            0x2000043c      0x574 load address 0x00403338
+.bss            0x2000043c      0x570 load address 0x00403338
                 0x2000043c                . = ALIGN (0x4)
                 0x2000043c                _sbss = .
                 0x2000043c                _szero = .
@@ -6404,57 +6406,57 @@ LOAD c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin
  .bss.input_pos_prog
                 0x200004dc        0x4 src/Programmer_USART.o
                 0x200004dc                input_pos_prog
- .bss.counts    0x200004e0        0x1 src/Programmer_USART.o
-                0x200004e0                counts
- *fill*         0x200004e1        0x3 
  .bss.received_byte_wifi
-                0x200004e4        0x4 src/wifi.o
-                0x200004e4                received_byte_wifi
+                0x200004e0        0x4 src/wifi.o
+                0x200004e0                received_byte_wifi
  .bss.new_rx_wifi
-                0x200004e8        0x1 src/wifi.o
-                0x200004e8                new_rx_wifi
- *fill*         0x200004e9        0x3 
+                0x200004e4        0x1 src/wifi.o
+                0x200004e4                new_rx_wifi
+ *fill*         0x200004e5        0x3 
  .bss.input_pos_wifi
-                0x200004ec        0x4 src/wifi.o
-                0x200004ec                input_pos_wifi
+                0x200004e8        0x4 src/wifi.o
+                0x200004e8                input_pos_wifi
+ .bss.counts    0x200004ec        0x1 src/wifi.o
+                0x200004ec                counts
  .bss.wifi_setup_flag
-                0x200004f0        0x1 src/wifi.o
-                0x200004f0                wifi_setup_flag
- *fill*         0x200004f1        0x3 
+                0x200004ed        0x1 src/wifi.o
+                0x200004ed                wifi_setup_flag
+ *fill*         0x200004ee        0x2 
  .bss.receivedMessage
-                0x200004f4        0x4 src/wifi.o
-                0x200004f4                receivedMessage
+                0x200004f0        0x4 src/wifi.o
+                0x200004f0                receivedMessage
  .bss.ul_sysclk.8593
-                0x200004f8        0x4 src/wifi.o
+                0x200004f4        0x4 src/wifi.o
  *(COMMON)
- COMMON         0x200004fc       0x6a src/ProgrammerInterface.o
-                0x200004fc                uintreceivedMessage_prog_prog
-                0x20000500                rawRecievedMessage_prog
-                0x20000534                buffer_prog
- *fill*         0x20000566        0x2 
- COMMON         0x20000568      0x420 src/wifi.o
-                0x20000568                rawRecievedMessage
-                0x2000059c                buffer_wifi
-                0x20000984                uintreceivedMessage
- COMMON         0x20000988        0x4 src/ASF/sam/drivers/pio/pio.o
-                0x20000988                pio_capture_enable_flag
- COMMON         0x2000098c       0x21 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-lock.o)
-                0x2000098c                __lock___atexit_recursive_mutex
-                0x20000990                __lock___arc4random_mutex
-                0x20000994                __lock___env_recursive_mutex
-                0x20000998                __lock___sinit_recursive_mutex
-                0x2000099c                __lock___malloc_recursive_mutex
-                0x200009a0                __lock___at_quick_exit_mutex
-                0x200009a4                __lock___dd_hash_mutex
-                0x200009a8                __lock___tz_mutex
-                0x200009ac                __lock___sfp_recursive_mutex
-                0x200009b0                . = ALIGN (0x4)
- *fill*         0x200009ad        0x3 
-                0x200009b0                _ebss = .
-                0x200009b0                _ezero = .
+ COMMON         0x200004f8       0x6a src/ProgrammerInterface.o
+                0x200004f8                uintreceivedMessage_prog_prog
+                0x200004fc                rawRecievedMessage_prog
+                0x20000530                buffer_prog
+ *fill*         0x20000562        0x2 
+ COMMON         0x20000564      0x420 src/wifi.o
+                0x20000564                rawRecievedMessage
+                0x20000598                buffer_wifi
+                0x20000980                uintreceivedMessage
+ COMMON         0x20000984        0x4 src/ASF/sam/drivers/pio/pio.o
+                0x20000984                pio_capture_enable_flag
+ COMMON         0x20000988       0x21 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-lock.o)
+                0x20000988                __lock___atexit_recursive_mutex
+                0x2000098c                __lock___arc4random_mutex
+                0x20000990                __lock___env_recursive_mutex
+                0x20000994                __lock___sinit_recursive_mutex
+                0x20000998                __lock___malloc_recursive_mutex
+                0x2000099c                __lock___at_quick_exit_mutex
+                0x200009a0                __lock___dd_hash_mutex
+                0x200009a4                __lock___tz_mutex
+                0x200009a8                __lock___sfp_recursive_mutex
+                0x200009ac                . = ALIGN (0x4)
+ *fill*         0x200009a9        0x3 
+                0x200009ac                _ebss = .
+                0x200009ac                _ezero = .
 
-.stack          0x200009b0     0x3000 load address 0x004038ac
+.stack          0x200009ac     0x3004 load address 0x004038a8
                 0x200009b0                . = ALIGN (0x8)
+ *fill*         0x200009ac        0x4 
                 0x200009b0                _sstack = .
                 0x200039b0                . = (. + __stack_size__)
  *fill*         0x200009b0     0x3000 
@@ -6554,60 +6556,60 @@ OUTPUT(NetworkedProgrammer.elf elf32-littlearm)
  .comment       0x00000059       0x5a src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
  .comment       0x00000059       0x5a src/main.o
 
-.debug_info     0x00000000    0x132e7
+.debug_info     0x00000000    0x13305
  .debug_info    0x00000000     0x17aa src/ASF/sam/drivers/pio/pio_handler.o
  .debug_info    0x000017aa     0x1e90 src/ASF/sam/drivers/usart/usart.o
  .debug_info    0x0000363a      0xbe3 src/ASF/sam/drivers/wdt/wdt.o
- .debug_info    0x0000421d     0x1592 src/ProgrammerInterface.o
- .debug_info    0x000057af     0x1417 src/Programmer_USART.o
- .debug_info    0x00006bc6     0x10b3 src/timer_interface.o
- .debug_info    0x00007c79     0x2198 src/wifi.o
- .debug_info    0x00009e11      0xa45 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_info    0x0000a856     0x11a6 src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_info    0x0000b9fc     0x1d8d src/ASF/sam/drivers/pio/pio.o
- .debug_info    0x0000d789     0x1a11 src/ASF/sam/drivers/pmc/pmc.o
- .debug_info    0x0000f19a     0x1255 src/ASF/sam/drivers/tc/tc.o
- .debug_info    0x000103ef     0x1398 src/ASF/common/boards/user_board/init.o
- .debug_info    0x00011787      0x6e9 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_info    0x00011e70      0x45c src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_info    0x000122cc     0x101b src/main.o
+ .debug_info    0x0000421d     0x1580 src/ProgrammerInterface.o
+ .debug_info    0x0000579d     0x1447 src/Programmer_USART.o
+ .debug_info    0x00006be4     0x10b3 src/timer_interface.o
+ .debug_info    0x00007c97     0x2198 src/wifi.o
+ .debug_info    0x00009e2f      0xa45 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_info    0x0000a874     0x11a6 src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_info    0x0000ba1a     0x1d8d src/ASF/sam/drivers/pio/pio.o
+ .debug_info    0x0000d7a7     0x1a11 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_info    0x0000f1b8     0x1255 src/ASF/sam/drivers/tc/tc.o
+ .debug_info    0x0001040d     0x1398 src/ASF/common/boards/user_board/init.o
+ .debug_info    0x000117a5      0x6e9 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_info    0x00011e8e      0x45c src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_info    0x000122ea     0x101b src/main.o
 
-.debug_abbrev   0x00000000     0x2953
+.debug_abbrev   0x00000000     0x296d
  .debug_abbrev  0x00000000      0x2c9 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_abbrev  0x000002c9      0x2c1 src/ASF/sam/drivers/usart/usart.o
  .debug_abbrev  0x0000058a      0x207 src/ASF/sam/drivers/wdt/wdt.o
  .debug_abbrev  0x00000791      0x3ca src/ProgrammerInterface.o
- .debug_abbrev  0x00000b5b      0x2f4 src/Programmer_USART.o
- .debug_abbrev  0x00000e4f      0x298 src/timer_interface.o
- .debug_abbrev  0x000010e7      0x485 src/wifi.o
- .debug_abbrev  0x0000156c      0x1b3 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_abbrev  0x0000171f      0x28f src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_abbrev  0x000019ae      0x296 src/ASF/sam/drivers/pio/pio.o
- .debug_abbrev  0x00001c44      0x2b8 src/ASF/sam/drivers/pmc/pmc.o
- .debug_abbrev  0x00001efc      0x24a src/ASF/sam/drivers/tc/tc.o
- .debug_abbrev  0x00002146      0x32f src/ASF/common/boards/user_board/init.o
- .debug_abbrev  0x00002475      0x17c src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_abbrev  0x000025f1      0x102 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_abbrev  0x000026f3      0x260 src/main.o
+ .debug_abbrev  0x00000b5b      0x30e src/Programmer_USART.o
+ .debug_abbrev  0x00000e69      0x298 src/timer_interface.o
+ .debug_abbrev  0x00001101      0x485 src/wifi.o
+ .debug_abbrev  0x00001586      0x1b3 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_abbrev  0x00001739      0x28f src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_abbrev  0x000019c8      0x296 src/ASF/sam/drivers/pio/pio.o
+ .debug_abbrev  0x00001c5e      0x2b8 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_abbrev  0x00001f16      0x24a src/ASF/sam/drivers/tc/tc.o
+ .debug_abbrev  0x00002160      0x32f src/ASF/common/boards/user_board/init.o
+ .debug_abbrev  0x0000248f      0x17c src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_abbrev  0x0000260b      0x102 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_abbrev  0x0000270d      0x260 src/main.o
 
-.debug_loc      0x00000000     0x6140
+.debug_loc      0x00000000     0x616c
  .debug_loc     0x00000000      0x364 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_loc     0x00000364     0x17d4 src/ASF/sam/drivers/usart/usart.o
  .debug_loc     0x00001b38      0x228 src/ASF/sam/drivers/wdt/wdt.o
  .debug_loc     0x00001d60      0x272 src/ProgrammerInterface.o
- .debug_loc     0x00001fd2      0x340 src/Programmer_USART.o
- .debug_loc     0x00002312      0x1b0 src/timer_interface.o
- .debug_loc     0x000024c2      0x6a4 src/wifi.o
- .debug_loc     0x00002b66      0x424 src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_loc     0x00002f8a     0x1174 src/ASF/sam/drivers/pio/pio.o
- .debug_loc     0x000040fe     0x1468 src/ASF/sam/drivers/pmc/pmc.o
- .debug_loc     0x00005566      0x844 src/ASF/sam/drivers/tc/tc.o
- .debug_loc     0x00005daa      0x160 src/ASF/common/boards/user_board/init.o
- .debug_loc     0x00005f0a       0x64 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_loc     0x00005f6e       0xe4 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_loc     0x00006052       0xee src/main.o
+ .debug_loc     0x00001fd2      0x36c src/Programmer_USART.o
+ .debug_loc     0x0000233e      0x1b0 src/timer_interface.o
+ .debug_loc     0x000024ee      0x6a4 src/wifi.o
+ .debug_loc     0x00002b92      0x424 src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_loc     0x00002fb6     0x1174 src/ASF/sam/drivers/pio/pio.o
+ .debug_loc     0x0000412a     0x1468 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_loc     0x00005592      0x844 src/ASF/sam/drivers/tc/tc.o
+ .debug_loc     0x00005dd6      0x160 src/ASF/common/boards/user_board/init.o
+ .debug_loc     0x00005f36       0x64 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_loc     0x00005f9a       0xe4 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_loc     0x0000607e       0xee src/main.o
 
-.debug_aranges  0x00000000      0xad0
+.debug_aranges  0x00000000      0xad8
  .debug_aranges
                 0x00000000       0x70 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_aranges
@@ -6617,47 +6619,47 @@ OUTPUT(NetworkedProgrammer.elf elf32-littlearm)
  .debug_aranges
                 0x000002f0       0x60 src/ProgrammerInterface.o
  .debug_aranges
-                0x00000350       0x70 src/Programmer_USART.o
+                0x00000350       0x78 src/Programmer_USART.o
  .debug_aranges
-                0x000003c0       0x48 src/timer_interface.o
+                0x000003c8       0x48 src/timer_interface.o
  .debug_aranges
-                0x00000408       0xd0 src/wifi.o
+                0x00000410       0xd0 src/wifi.o
  .debug_aranges
-                0x000004d8       0x20 src/ASF/common/services/delay/sam/cycle_counter.o
+                0x000004e0       0x20 src/ASF/common/services/delay/sam/cycle_counter.o
  .debug_aranges
-                0x000004f8       0x88 src/ASF/common/services/clock/sam4s/sysclk.o
+                0x00000500       0x88 src/ASF/common/services/clock/sam4s/sysclk.o
  .debug_aranges
-                0x00000580      0x1a8 src/ASF/sam/drivers/pio/pio.o
+                0x00000588      0x1a8 src/ASF/sam/drivers/pio/pio.o
  .debug_aranges
-                0x00000728      0x208 src/ASF/sam/drivers/pmc/pmc.o
+                0x00000730      0x208 src/ASF/sam/drivers/pmc/pmc.o
  .debug_aranges
-                0x00000930       0xd0 src/ASF/sam/drivers/tc/tc.o
+                0x00000938       0xd0 src/ASF/sam/drivers/tc/tc.o
  .debug_aranges
-                0x00000a00       0x40 src/ASF/common/boards/user_board/init.o
+                0x00000a08       0x40 src/ASF/common/boards/user_board/init.o
  .debug_aranges
-                0x00000a40       0x28 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+                0x00000a48       0x28 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
  .debug_aranges
-                0x00000a68       0x30 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+                0x00000a70       0x30 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
  .debug_aranges
-                0x00000a98       0x38 src/main.o
+                0x00000aa0       0x38 src/main.o
 
-.debug_ranges   0x00000000      0xa18
+.debug_ranges   0x00000000      0xa20
  .debug_ranges  0x00000000       0x60 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_ranges  0x00000060      0x228 src/ASF/sam/drivers/usart/usart.o
  .debug_ranges  0x00000288       0x38 src/ASF/sam/drivers/wdt/wdt.o
  .debug_ranges  0x000002c0       0x68 src/ProgrammerInterface.o
- .debug_ranges  0x00000328       0x60 src/Programmer_USART.o
- .debug_ranges  0x00000388       0x38 src/timer_interface.o
- .debug_ranges  0x000003c0       0xd8 src/wifi.o
- .debug_ranges  0x00000498       0x10 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_ranges  0x000004a8       0x78 src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_ranges  0x00000520      0x198 src/ASF/sam/drivers/pio/pio.o
- .debug_ranges  0x000006b8      0x1f8 src/ASF/sam/drivers/pmc/pmc.o
- .debug_ranges  0x000008b0       0xc0 src/ASF/sam/drivers/tc/tc.o
- .debug_ranges  0x00000970       0x48 src/ASF/common/boards/user_board/init.o
- .debug_ranges  0x000009b8       0x18 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_ranges  0x000009d0       0x20 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_ranges  0x000009f0       0x28 src/main.o
+ .debug_ranges  0x00000328       0x68 src/Programmer_USART.o
+ .debug_ranges  0x00000390       0x38 src/timer_interface.o
+ .debug_ranges  0x000003c8       0xd8 src/wifi.o
+ .debug_ranges  0x000004a0       0x10 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_ranges  0x000004b0       0x78 src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_ranges  0x00000528      0x198 src/ASF/sam/drivers/pio/pio.o
+ .debug_ranges  0x000006c0      0x1f8 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_ranges  0x000008b8       0xc0 src/ASF/sam/drivers/tc/tc.o
+ .debug_ranges  0x00000978       0x48 src/ASF/common/boards/user_board/init.o
+ .debug_ranges  0x000009c0       0x18 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_ranges  0x000009d8       0x20 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_ranges  0x000009f8       0x28 src/main.o
 
 .debug_macro    0x00000000     0x6429
  .debug_macro   0x00000000      0x4fd src/ASF/sam/drivers/pio/pio_handler.o
@@ -6711,23 +6713,23 @@ OUTPUT(NetworkedProgrammer.elf elf32-littlearm)
  .debug_macro   0x00006355       0x10 src/main.o
  .debug_macro   0x00006365       0xc4 src/main.o
 
-.debug_line     0x00000000     0xd422
+.debug_line     0x00000000     0xd42c
  .debug_line    0x00000000      0xb2f src/ASF/sam/drivers/pio/pio_handler.o
  .debug_line    0x00000b2f      0xffe src/ASF/sam/drivers/usart/usart.o
  .debug_line    0x00001b2d      0xa7b src/ASF/sam/drivers/wdt/wdt.o
  .debug_line    0x000025a8      0xfee src/ProgrammerInterface.o
- .debug_line    0x00003596      0xf43 src/Programmer_USART.o
- .debug_line    0x000044d9      0xeb7 src/timer_interface.o
- .debug_line    0x00005390     0x119d src/wifi.o
- .debug_line    0x0000652d      0xa2e src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_line    0x00006f5b      0xc78 src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_line    0x00007bd3      0xe47 src/ASF/sam/drivers/pio/pio.o
- .debug_line    0x00008a1a     0x1030 src/ASF/sam/drivers/pmc/pmc.o
- .debug_line    0x00009a4a      0xbcd src/ASF/sam/drivers/tc/tc.o
- .debug_line    0x0000a617      0xea6 src/ASF/common/boards/user_board/init.o
- .debug_line    0x0000b4bd      0x819 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_line    0x0000bcd6      0x858 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_line    0x0000c52e      0xef4 src/main.o
+ .debug_line    0x00003596      0xf4d src/Programmer_USART.o
+ .debug_line    0x000044e3      0xeb7 src/timer_interface.o
+ .debug_line    0x0000539a     0x119d src/wifi.o
+ .debug_line    0x00006537      0xa2e src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_line    0x00006f65      0xc78 src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_line    0x00007bdd      0xe47 src/ASF/sam/drivers/pio/pio.o
+ .debug_line    0x00008a24     0x1030 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_line    0x00009a54      0xbcd src/ASF/sam/drivers/tc/tc.o
+ .debug_line    0x0000a621      0xea6 src/ASF/common/boards/user_board/init.o
+ .debug_line    0x0000b4c7      0x819 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_line    0x0000bce0      0x858 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_line    0x0000c538      0xef4 src/main.o
 
 .debug_str      0x00000000    0x51d81
  .debug_str     0x00000000    0x47b24 src/ASF/sam/drivers/pio/pio_handler.o
@@ -6736,11 +6738,11 @@ OUTPUT(NetworkedProgrammer.elf elf32-littlearm)
                               0x47e7d (size before relaxing)
  .debug_str     0x00048506      0x13d src/ASF/sam/drivers/wdt/wdt.o
                               0x4757f (size before relaxing)
- .debug_str     0x00048643     0x786e src/ProgrammerInterface.o
-                              0x4f432 (size before relaxing)
- .debug_str     0x0004feb1      0x19c src/Programmer_USART.o
-                              0x4a0e3 (size before relaxing)
- .debug_str     0x0005004d      0x143 src/timer_interface.o
+ .debug_str     0x00048643     0x7867 src/ProgrammerInterface.o
+                              0x4f42b (size before relaxing)
+ .debug_str     0x0004feaa      0x19c src/Programmer_USART.o
+                              0x4a118 (size before relaxing)
+ .debug_str     0x00050046      0x14a src/timer_interface.o
                               0x49a5b (size before relaxing)
  .debug_str     0x00050190      0x6e1 src/wifi.o
                               0x4a928 (size before relaxing)
@@ -6763,35 +6765,35 @@ OUTPUT(NetworkedProgrammer.elf elf32-littlearm)
  .debug_str     0x00051d73        0xe src/main.o
                               0x4f5fa (size before relaxing)
 
-.debug_frame    0x00000000     0x30c4
+.debug_frame    0x00000000     0x30e8
  .debug_frame   0x00000000      0x1a4 src/ASF/sam/drivers/pio/pio_handler.o
  .debug_frame   0x000001a4      0xa7c src/ASF/sam/drivers/usart/usart.o
  .debug_frame   0x00000c20      0x100 src/ASF/sam/drivers/wdt/wdt.o
  .debug_frame   0x00000d20      0x160 src/ProgrammerInterface.o
- .debug_frame   0x00000e80      0x198 src/Programmer_USART.o
- .debug_frame   0x00001018       0xe4 src/timer_interface.o
- .debug_frame   0x000010fc      0x364 src/wifi.o
- .debug_frame   0x00001460       0x20 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_frame   0x00001480      0x200 src/ASF/common/services/clock/sam4s/sysclk.o
- .debug_frame   0x00001680      0x7c0 src/ASF/sam/drivers/pio/pio.o
- .debug_frame   0x00001e40      0x920 src/ASF/sam/drivers/pmc/pmc.o
- .debug_frame   0x00002760      0x3a8 src/ASF/sam/drivers/tc/tc.o
- .debug_frame   0x00002b08       0xbc src/ASF/common/boards/user_board/init.o
- .debug_frame   0x00002bc4       0x48 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
- .debug_frame   0x00002c0c       0x78 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
- .debug_frame   0x00002c84       0x9c src/main.o
- .debug_frame   0x00002d20       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_aeabi_uldivmod.o)
- .debug_frame   0x00002d4c       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_udivmoddi4.o)
- .debug_frame   0x00002d80       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-init.o)
- .debug_frame   0x00002dac       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strcpy.o)
- .debug_frame   0x00002dcc       0xd8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strstr.o)
- .debug_frame   0x00002ea4       0x5c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-__call_atexit.o)
- .debug_frame   0x00002f00       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-atexit.o)
- .debug_frame   0x00002f20       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-fini.o)
- .debug_frame   0x00002f54       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-lock.o)
- .debug_frame   0x00003004       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-memcmp.o)
- .debug_frame   0x00003040       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strchr.o)
- .debug_frame   0x00003090       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-__atexit.o)
+ .debug_frame   0x00000e80      0x1bc src/Programmer_USART.o
+ .debug_frame   0x0000103c       0xe4 src/timer_interface.o
+ .debug_frame   0x00001120      0x364 src/wifi.o
+ .debug_frame   0x00001484       0x20 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_frame   0x000014a4      0x200 src/ASF/common/services/clock/sam4s/sysclk.o
+ .debug_frame   0x000016a4      0x7c0 src/ASF/sam/drivers/pio/pio.o
+ .debug_frame   0x00001e64      0x920 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_frame   0x00002784      0x3a8 src/ASF/sam/drivers/tc/tc.o
+ .debug_frame   0x00002b2c       0xbc src/ASF/common/boards/user_board/init.o
+ .debug_frame   0x00002be8       0x48 src/ASF/sam/utils/cmsis/sam4s/source/templates/gcc/startup_sam4s.o
+ .debug_frame   0x00002c30       0x78 src/ASF/sam/utils/cmsis/sam4s/source/templates/system_sam4s.o
+ .debug_frame   0x00002ca8       0x9c src/main.o
+ .debug_frame   0x00002d44       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_aeabi_uldivmod.o)
+ .debug_frame   0x00002d70       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/thumb/v7e-m\libgcc.a(_udivmoddi4.o)
+ .debug_frame   0x00002da4       0x2c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-init.o)
+ .debug_frame   0x00002dd0       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strcpy.o)
+ .debug_frame   0x00002df0       0xd8 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strstr.o)
+ .debug_frame   0x00002ec8       0x5c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-__call_atexit.o)
+ .debug_frame   0x00002f24       0x20 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-atexit.o)
+ .debug_frame   0x00002f44       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-fini.o)
+ .debug_frame   0x00002f78       0xb0 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-lock.o)
+ .debug_frame   0x00003028       0x3c c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-memcmp.o)
+ .debug_frame   0x00003064       0x50 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-strchr.o)
+ .debug_frame   0x000030b4       0x34 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-__atexit.o)
 
 Cross Reference Table
 
@@ -6895,6 +6897,7 @@ __aeabi_uldivmod                                  c:/program files (x86)/atmel/s
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-svfprintf.o)
                                                   src/main.o
                                                   src/wifi.o
+                                                  src/Programmer_USART.o
                                                   src/ProgrammerInterface.o
 __any_on                                          c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-mprec.o)
 __ascii_mbtowc                                    c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-mbtowc_r.o)
@@ -7128,10 +7131,8 @@ configure_wifi_comm_pin                           src/wifi.o
 configure_wifi_web_setup_pin                      src/wifi.o
                                                   src/main.o
 counts                                            src/wifi.o
-                                                  src/Programmer_USART.o
                                                   src/main.o
                                                   src/timer_interface.o
-                                                  src/ProgrammerInterface.o
 cpu_irq_enter_critical                            src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
 cpu_irq_leave_critical                            src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
 errno                                             c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-reent.o)
@@ -7337,6 +7338,7 @@ pmc_wait_wakeup_clocks_restore                    src/ASF/sam/drivers/pmc/sleep.
 portable_delay_cycles                             src/ASF/common/services/delay/sam/cycle_counter.o
                                                   src/main.o
                                                   src/wifi.o
+                                                  src/Programmer_USART.o
                                                   src/ProgrammerInterface.o
 process_data_prog                                 src/Programmer_USART.o
 process_data_wifi                                 src/wifi.o

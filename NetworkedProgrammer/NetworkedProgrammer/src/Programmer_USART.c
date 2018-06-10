@@ -8,7 +8,7 @@ volatile uint32_t received_byte_prog = 0;
 volatile bool new_rx_prog = false;
 volatile uint8_t buffer_prog[MAX_INPUT_PROG];
 volatile uint32_t input_pos_prog = 0;
-volatile uint8_t counts = 0;
+
 volatile bool prog_setup_flag = false;
 volatile uint32_t receivedMessage_prog = NO_MESSAGE;
 volatile uint8_t rawRecievedMessage_prog[maxProgMessage];
@@ -126,15 +126,11 @@ to zero, which will automatically increment every second, and waiting while coun
 */
 void write_prog_command(char* comm, uint8_t cnt) 
 {
-	counts = 0;
+
 	// send a message via USART:
 	//usart_write_line(BOARD_USART_PROG, "string to write\r\n");
 	usart_write_line(BOARD_USART_PROG, comm);
-	receivedMessage_prog = NO_MESSAGE;
-	// Wait for timeout or received message
-	while((counts<cnt)&&(receivedMessage_prog==NO_MESSAGE)){
-		// Do nothing
-		int dv = 0;
-		dv++;
-	}
+	
+	delay_ms(5);
+
 }
