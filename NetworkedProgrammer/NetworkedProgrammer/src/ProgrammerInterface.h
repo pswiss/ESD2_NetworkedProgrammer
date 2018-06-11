@@ -36,12 +36,12 @@
 #define OFFSET_DATA				9
 
 // Hex File record types
-#define HEX_DATA						0
-#define HEX_EOF							1
-#define HEX_EXTENDED_SEGMENT_ADDRESS	2
-#define HEX_START_SEGMENT_ADDRESS		3
-#define HEX_EXTENDED_LINEAR_ADDRESS		4
-#define HEX_START_LINEAR_ADDRESS		5
+#define HEX_DATA						0x00
+#define HEX_EOF							0x01
+#define HEX_EXTENDED_SEGMENT_ADDRESS	0x02
+#define HEX_START_SEGMENT_ADDRESS		0x03
+#define HEX_EXTENDED_LINEAR_ADDRESS		0x04
+#define HEX_START_LINEAR_ADDRESS		0x05
 
 // Timings
 //us

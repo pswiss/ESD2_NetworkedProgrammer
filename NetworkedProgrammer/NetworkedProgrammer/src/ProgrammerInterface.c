@@ -96,10 +96,11 @@ void Write_Program(void){// eventually put input file here?
 	uint32_t current_line = 0;
 
 	// A few initialization writes
-	uint8_t* initWrites[2];
+	uint8_t* initWrites[3];
 	initWrites[0] = 0x54;
 	initWrites[1] = 0x23;
-	write_prog_command(&initWrites,1);
+	initWrites[3] = '\0';
+	write_prog_command(&initWrites,0);
 	
 	// Go through entire program
 	while(EOF_reached!=1){
@@ -112,7 +113,7 @@ void Write_Program(void){// eventually put input file here?
 			uint8_t byteToWrite = 0;
 
 			// Check the record type
-			switch(buffer_program[current_character+OFFSET_RECORDTYPE]){
+			switch(ASCII_to_Num(buffer_program[current_character+OFFSET_RECORDTYPE+1])){
 				case HEX_DATA:
 					// Reconstruct the value of the address
 					addressValue = PROGRAM_MEMORY_START + 
@@ -129,8 +130,8 @@ void Write_Program(void){// eventually put input file here?
 						
 						// Create the string to write
 						// Format for writing a byte: 'O'AAAAAA','CC'#'
-						uint8_t boot_write_string[17];
-						sprintf(boot_write_string, "O%x,%x#",addressValue,byteToWrite);
+						uint8_t boot_write_string[11];
+						sprintf(boot_write_string, "O%x,%02x#",addressValue+jj,byteToWrite);
 
 						// Write the string to the attached chip
 						write_prog_command(&boot_write_string,1);
@@ -163,6 +164,7 @@ void Write_Program(void){// eventually put input file here?
 			current_character += 1;
 		}
 	}
+	return 1;
 }
 
 // Clear the target device

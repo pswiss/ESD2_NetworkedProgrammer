@@ -117,6 +117,14 @@ void configure_usart_prog(void)
 	gpio_configure_pin(PIN_USART1_RXD_IDX, PIN_USART1_RXD_FLAGS);
 	/* Configure USART TXD pin */
 	gpio_configure_pin(PIN_USART1_TXD_IDX, PIN_USART1_TXD_FLAGS);
+
+	/* Configure USART CTS pin */
+	//gpio_configure_pin(PIN_USART0_CTS_IDX, PIN_USART0_CTS_FLAGS);
+	ioport_set_pin_dir(PIN_USART1_CTS_IDX,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_level(PIN_USART1_CTS_IDX,false);
+	/* Configure USART RTS pin */
+	gpio_configure_pin(PIN_USART1_RTS_IDX, PIN_USART1_RTS_FLAGS);
+
 }
 
 /*

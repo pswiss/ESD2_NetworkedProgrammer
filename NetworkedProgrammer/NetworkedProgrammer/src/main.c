@@ -33,8 +33,12 @@ int main (void)
 	
 	// Reset the wifi
 	resetWifi();
-	delay_ms(8000);
-	//writeWifiConfigurationCommands();
+	//delay_ms(8000); // RE-ENABLE ME
+
+	// Configure programmer usart
+ 	configure_usart_prog();
+	Clear_Target();
+	Write_Program();
 	
 	// Main Loop //////////////////////////////////////////////////////////////////////////////////////////////////
 	while(1){
