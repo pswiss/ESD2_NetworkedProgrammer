@@ -106,6 +106,11 @@ void Write_Program(void){// eventually put input file here?
 	while(EOF_reached!=1){
 		// Check if I am looking at the start of the line
 		if(buffer_program[current_character]==':'){
+
+			if(current_line%100==0){
+				int aaaa = 1;
+			}
+
 			// Check the byte count
 			uint32_t byteCount = ASCII_to_Num(buffer_program[current_character+1])*16+ASCII_to_Num(buffer_program[current_character+2]);
 			
@@ -164,6 +169,7 @@ void Write_Program(void){// eventually put input file here?
 			current_character += 1;
 		}
 	}
+	Reset_Target();
 	return 1;
 }
 
