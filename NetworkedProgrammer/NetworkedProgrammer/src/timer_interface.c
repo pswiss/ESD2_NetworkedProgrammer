@@ -6,6 +6,7 @@
  */ 
 
 #include "timer_interface.h"
+volatile uint8_t counts;
 
 void TC0_Handler(void)
 {

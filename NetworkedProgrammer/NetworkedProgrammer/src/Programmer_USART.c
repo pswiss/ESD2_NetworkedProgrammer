@@ -8,7 +8,7 @@ volatile uint32_t received_byte_prog = 0;
 volatile bool new_rx_prog = false;
 volatile uint8_t buffer_prog[MAX_INPUT_PROG];
 volatile uint32_t input_pos_prog = 0;
-
+volatile uint8_t counts;
 volatile bool prog_setup_flag = false;
 volatile uint32_t receivedMessage_prog = NO_MESSAGE;
 volatile uint8_t rawRecievedMessage_prog[maxProgMessage];
@@ -41,8 +41,14 @@ Stores every incoming byte (in byte) from the AMW136 in a buffer.
 */
 void process_incoming_byte_prog(uint8_t in_byte) 
 {
-	buffer_prog[input_pos_prog] = in_byte;
-	input_pos_prog++;
+	/*buffer_prog[input_pos_prog] = in_byte;
+	input_pos_prog++;*/
+
+	// Successful message if see '>'
+	/*if(in_byte=='>'){
+		receivedMessage_prog = PROG_SEND_SUCCESS;
+	}	*/
+	receivedMessage_prog = in_byte;
 }
 
 /*
@@ -69,9 +75,15 @@ filled by process incoming byte prog. This processing should be looking for cert
 responses that the AMW136 should give, such as start transfer when it is ready to
 receive the image.
 */
-void process_data_prog (void) 
+void process_data_prog(void) 
 {
-	receivedMessage_prog = DEFAULT;
+	if(strstr(buffer_prog,">")){
+		receivedMessage_prog = PROG_SEND_SUCCESS;
+	}
+	else{
+		receivedMessage_prog = PROG_SEND_FAIL;
+	}
+	
 }
 
 /*
@@ -132,13 +144,55 @@ Writes a command (comm) and waits either for an acknowledgment
 or a timeout. The timeout can be created by setting the global variable counts
 to zero, which will automatically increment every second, and waiting while counts < cnt.
 */
-void write_prog_command(char* comm, uint8_t cnt) 
+void write_prog_command(char* comm, uint8_t cnt, uint32_t ensureSentCommand) 
 {
+	//counts = 0;
+
+	//uint8_t checkSend = PROG_SEND_FAIL;
+
+	usart_write_line(BOARD_USART_PROG, comm);
+	receivedMessage_prog = NO_MESSAGE;
+
+	// Latch to bypass check
+	if(ensureSentCommand == 0){
+		receivedMessage_prog = '>';
+	}
+
+	while(receivedMessage_prog!='>'){//(counts<cnt)&&(receivedMessage_prog==NO_MESSAGE)){
+		// Do nothing
+		int dv = 0;
+		dv++;
+	}
+	delay_ms(1);
+
+
+	
+	/*while(checkSend == PROG_SEND_FAIL){
+		usart_write_line(BOARD_USART_PROG, comm);
+		receivedMessage_prog = NO_MESSAGE;
+		// Wait for timeout or received Message
+		while(receivedMessage_prog!='>'){//(counts<cnt)&&(receivedMessage_prog==NO_MESSAGE)){
+			// Do nothing
+			int dv = 0;
+			dv++;
+		}
+		// Latch to bypass check
+		if(ensureSentCommand == 0){
+			receivedMessage_prog = PROG_SEND_SUCCESS;
+		}
+
+		if(receivedMessage_prog == PROG_SEND_SUCCESS){
+			checkSend = PROG_SEND_SUCCESS;
+		}
+		else{
+			delay_ms(500);
+		}
+	}*/
 
 	// send a message via USART:
 	//usart_write_line(BOARD_USART_PROG, "string to write\r\n");
-	usart_write_line(BOARD_USART_PROG, comm);
 	
-	delay_ms(1);
+	
+	//delay_ms(1);
 
 }

@@ -98,7 +98,8 @@ void Write_Program(void){// eventually put input file here?
 	// A few initialization writes
 	uint8_t initWrites[5];
 	sprintf(initWrites,"T#");
-	write_prog_command(&initWrites,0);
+	write_prog_command(&initWrites,0,0);
+	delay_ms(20);
 
 	int aaaa = 0;
 	
@@ -140,7 +141,7 @@ void Write_Program(void){// eventually put input file here?
 						sprintf(boot_write_string, "O%06x,%02x#",addressValue+jj,byteToWrite);
 
 						// Write the string to the attached chip
-						write_prog_command(&boot_write_string,1);
+						write_prog_command(&boot_write_string, 1, 1);
 					}
 					break;
 				case HEX_EOF:

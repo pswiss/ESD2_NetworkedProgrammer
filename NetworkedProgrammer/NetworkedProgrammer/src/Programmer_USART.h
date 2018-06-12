@@ -51,12 +51,17 @@ volatile bool new_rx_prog;
 volatile uint8_t buffer_prog[MAX_INPUT_PROG];
 volatile uint32_t input_pos_prog;
 
+volatile uint8_t counts;
+
 // Variables: interrupt flag
 volatile bool prog_setup_flag;
 
 // Messages
 #define maxProgMessage				50
 #define NO_MESSAGE					0
+
+#define PROG_SEND_SUCCESS			55
+#define PROG_SEND_FAIL				56
 
 #define NOT_CONNECTED				1
 #define msg_NOT_CONNECTED			"Client not connected"
@@ -94,7 +99,7 @@ void prog_web_setup_handler(uint32_t, uint32_t);
 void configure_usart_prog(void);
 void configure_prog_comm_pin(void);
 void configure_prog_web_setup_pin(void);
-void write_prog_command(char* , uint8_t);
+void write_prog_command(char* , uint8_t, uint32_t);
 
 
 #endif /* PROGRAMMER_USART_H_ */
