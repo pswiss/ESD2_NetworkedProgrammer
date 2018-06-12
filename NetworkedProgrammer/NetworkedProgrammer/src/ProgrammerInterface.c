@@ -92,7 +92,7 @@ uint8_t Num_to_ASCII(uint8_t inputNum){
 // Interpret the given program
 void Write_Program(void){// eventually put input file here?
 	uint8_t EOF_reached = 0;
-	uint8_t current_character = 0;
+	uint32_t current_character = 0;
 	uint32_t current_line = 0;
 
 	// A few initialization writes
@@ -110,7 +110,6 @@ void Write_Program(void){// eventually put input file here?
 
 			if(current_line>300){
 				aaaa++;
-
 			}
 
 			// Check the byte count

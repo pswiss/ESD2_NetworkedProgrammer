@@ -139,6 +139,6 @@ void write_prog_command(char* comm, uint8_t cnt)
 	//usart_write_line(BOARD_USART_PROG, "string to write\r\n");
 	usart_write_line(BOARD_USART_PROG, comm);
 	
-	delay_ms(5);
+	delay_ms(1);
 
 }
