@@ -15,37 +15,37 @@ volatile uint8_t buffer_program[MAX_PROGRAM_SIZE] = hardprogram;
 // Convert from ASCII to number (supports up to base 16)
 uint8_t ASCII_to_Num(uint8_t inputChar){
 	switch(inputChar){
-		case 0x30:
+		case '0':
 			return 0;
-		case 0x31:
+		case '1':
 			return 1;
-		case 0x32:
+		case '2':
 			return 2;
-		case 0x33:
+		case '3':
 			return 3;
-		case 0x34:
+		case '4':
 			return 4;
-		case 0x35:
+		case '5':
 			return 5;
-		case 0x36:
+		case '6':
 			return 6;
-		case 0x37:
+		case '7':
 			return 7;
-		case 0x38:
+		case '8':
 			return 8;
-		case 0x39:
+		case '9':
 			return 9;
-		case 0x41:
+		case 'A':
 			return 10;
-		case 0x42:
+		case 'B':
 			return 11;
-		case 0x43:
+		case 'C':
 			return 12;
-		case 0x44:
+		case 'D':
 			return 13;
-		case 0x45:
+		case 'E':
 			return 14;
-		case 0x46:
+		case 'F':
 			return 15;
 	}
 }
@@ -54,37 +54,37 @@ uint8_t ASCII_to_Num(uint8_t inputChar){
 uint8_t Num_to_ASCII(uint8_t inputNum){
 	switch(inputNum){
 		case 0x00:
-			return 0x30;
+			return '0';
 		case 0x01:
-			return 0x31;
+			return '1';
 		case 0x02:
-			return 0x32;
+			return '2';
 		case 0x03:
-			return 0x33;
+			return '3';
 		case 0x04:
-			return 0x34;
+			return '4';
 		case 0x05:
-			return 0x35;
+			return '5';
 		case 0x06:
-			return 0x36;
+			return '6';
 		case 0x07:
-			return 0x37;
+			return '7';
 		case 0x08:
-			return 0x38;
+			return '8';
 		case 0x09:
-			return 0x39;
+			return '9';
 		case 0x0A:
-			return 0x41;
+			return 'A';
 		case 0x0B:
-			return 0x42;
-		case 0x0C:
-			return 0x43;
+			return 'B';
+		case 'C':
+			return 'C';
 		case 0x0D:
-			return 0x44;
+			return 'D';
 		case 0x0E:
-			return 0x45;
+			return 'E';
 		case 0x0F:
-			return 0x46;
+			return 'F';
 	}
 }
 
@@ -96,19 +96,21 @@ void Write_Program(void){// eventually put input file here?
 	uint32_t current_line = 0;
 
 	// A few initialization writes
-	uint8_t* initWrites[3];
-	initWrites[0] = 0x54;
-	initWrites[1] = 0x23;
-	initWrites[3] = '\0';
+	uint8_t initWrites[5];
+	sprintf(initWrites,"T#");
 	write_prog_command(&initWrites,0);
+
+	int aaaa = 0;
 	
 	// Go through entire program
 	while(EOF_reached!=1){
+		
 		// Check if I am looking at the start of the line
 		if(buffer_program[current_character]==':'){
 
-			if(current_line%100==0){
-				int aaaa = 1;
+			if(current_line>300){
+				aaaa++;
+
 			}
 
 			// Check the byte count
@@ -125,7 +127,7 @@ void Write_Program(void){// eventually put input file here?
 										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+0])*0x1000 +
 										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+1])*0x100 +
 										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+2])*0x10 +
-										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+0]);
+										ASCII_to_Num(buffer_program[current_character+OFFSET_ADDRESS+3]);
 
 					// Loop through for each byte to send and send it
 					for(uint32_t jj = 0; jj < byteCount; jj++){
@@ -136,7 +138,7 @@ void Write_Program(void){// eventually put input file here?
 						// Create the string to write
 						// Format for writing a byte: 'O'AAAAAA','CC'#'
 						uint8_t boot_write_string[11];
-						sprintf(boot_write_string, "O%x,%02x#",addressValue+jj,byteToWrite);
+						sprintf(boot_write_string, "O%06x,%02x#",addressValue+jj,byteToWrite);
 
 						// Write the string to the attached chip
 						write_prog_command(&boot_write_string,1);
