@@ -47,7 +47,7 @@
 //us
 
 //ms
-#define DURATION_CLEAR			50
+#define DURATION_CLEAR			100
 
 // Commonly-Used Communication Messages
 

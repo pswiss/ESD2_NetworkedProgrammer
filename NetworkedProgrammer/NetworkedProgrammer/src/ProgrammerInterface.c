@@ -100,18 +100,13 @@ void Write_Program(void){// eventually put input file here?
 	sprintf(initWrites,"T#");
 	write_prog_command(&initWrites,0,0);
 	delay_ms(20);
-
-	int aaaa = 0;
+	
 	
 	// Go through entire program
 	while(EOF_reached!=1){
 		
 		// Check if I am looking at the start of the line
 		if(buffer_program[current_character]==':'){
-
-			if(current_line>300){
-				aaaa++;
-			}
 
 			// Check the byte count
 			uint32_t byteCount = ASCII_to_Num(buffer_program[current_character+1])*16+ASCII_to_Num(buffer_program[current_character+2]);
@@ -164,6 +159,7 @@ void Write_Program(void){// eventually put input file here?
 			// Jump to next colon
 			current_character = current_character+OFFSET_DATA+2+byteCount;
 			current_line++;
+
 			
 		}
 		else{
@@ -171,7 +167,15 @@ void Write_Program(void){// eventually put input file here?
 			current_character += 1;
 		}
 	}
-	Reset_Target();
+
+	uint8_t boot_write_string[11];
+	sprintf(boot_write_string, "G400000#");
+	
+
+	// Write the string to the attached chip
+	write_prog_command(&boot_write_string, 1, 0);
+
+	//Reset_Target();
 	return 1;
 }
 

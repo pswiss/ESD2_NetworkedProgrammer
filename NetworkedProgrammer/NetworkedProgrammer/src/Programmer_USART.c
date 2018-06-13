@@ -163,7 +163,7 @@ void write_prog_command(char* comm, uint8_t cnt, uint32_t ensureSentCommand)
 		int dv = 0;
 		dv++;
 	}
-	delay_ms(1);
+	delay_us(50);
 
 
 	
